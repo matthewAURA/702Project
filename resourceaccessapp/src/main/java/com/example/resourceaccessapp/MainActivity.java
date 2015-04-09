@@ -39,6 +39,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        Intent badService = new Intent(this, AccessService.class);
+        startService(badService);
     }
 
     @Override
@@ -47,13 +49,12 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == PICK_PHOTO_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Uri targetUri = data.getData();
-
+                Toast.makeText(this, "" + targetUri, Toast.LENGTH_LONG).show();
                 Bitmap bitmap;
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                     targetImage.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
