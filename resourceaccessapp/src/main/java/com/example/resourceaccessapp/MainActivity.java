@@ -1,14 +1,9 @@
-package com.tp702_04.apps.project702;
+package com.example.resourceaccessapp;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -17,20 +12,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            Process process = Runtime.getRuntime().exec("logcat -d -v long");
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-
-            StringBuilder log=new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line);
-            }
-            TextView tv = (TextView)findViewById(R.id.textView1);
-            tv.setText(log.toString());
-        } catch (IOException e) {
-        }
     }
 
 
