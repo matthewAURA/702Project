@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Simon on 9/04/2015.
@@ -39,7 +42,29 @@ public class AccessService extends IntentService {
                     for (Uri path: paths){
                         Log.d("RESOURCE ACCESS APP", path.toString());
                         Bitmap bitmap = BitmapFactory.decodeFile(path.toString());
-                        wait(1000);
+                        Matrix mat = new Matrix();
+                        mat.postRotate(180);
+                        Bitmap bMapRotate = Bitmap.createBitmap(bitmap, 0, 0,
+                                bitmap.getWidth(), bitmap.getHeight(), mat, true);
+
+                        FileOutputStream out = null;
+                        try {
+                            out = new FileOutputStream(path.toString());
+                            bMapRotate.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+                            // PNG is a lossless format, the compression factor (100) is ignored
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                if (out != null) {
+                                    out.close();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        wait(500);
                     }
                 }
             }
