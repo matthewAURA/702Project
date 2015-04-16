@@ -4,17 +4,30 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-
+import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
 public class MainActivity extends ListActivity {
+
+    private ExpandableLogListAdapter expandableLogListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.listTextItem);
-        setListAdapter(adapter);
+
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view);
+        expandableListView.setOnGroupClickListener(new OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
+        });
+
+        expandableLogListAdapter = new ExpandableLogListAdapter(this);
+        expandableListView.setAdapter(expandableLogListAdapter);
+
     }
 
     @Override
