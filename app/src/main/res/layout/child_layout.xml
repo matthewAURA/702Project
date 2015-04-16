@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/list_child_1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_child_height" />
+        android:layout_height="@dimen/list_child_height"
+        android:text="@string/list_item"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/list_child_2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_child_height" />
+        android:layout_height="@dimen/list_child_height"
+        android:text="@string/list_item"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/list_child_3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_child_height" />
+        android:layout_height="@dimen/list_child_height"
+        android:text="@string/list_item"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/list_child_4"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_child_height" />
+        android:layout_height="@dimen/list_child_height"
+        android:text="@string/list_item"
+        android:layout_weight="1" />
 
 </LinearLayout>
