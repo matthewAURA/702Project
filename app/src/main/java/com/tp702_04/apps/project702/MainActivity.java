@@ -12,6 +12,7 @@ public class MainActivity extends ListActivity {
 
     private ExpandableLogListAdapter expandableLogListAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class MainActivity extends ListActivity {
 
         expandableLogListAdapter = new ExpandableLogListAdapter(this);
         expandableListView.setAdapter(expandableLogListAdapter);
+
 
     }
 
