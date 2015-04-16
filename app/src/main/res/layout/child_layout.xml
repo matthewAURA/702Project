@@ -7,28 +7,28 @@
         android:id="@+id/list_child_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item"
+        android:text="@string/list_item_1"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/list_child_2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item"
+        android:text="@string/list_item_2"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/list_child_3"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item"
+        android:text="@string/list_item_3"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/list_child_4"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item"
+        android:text="@string/list_item_4"
         android:layout_weight="1" />
 
 </LinearLayout>

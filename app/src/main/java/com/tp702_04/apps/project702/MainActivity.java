@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
             expandableLogListAdapter.clear();
             expandableLogListAdapter.addAll((ArrayList<LogItem>) logItems);
             expandableLogListAdapter.notifyDataSetChanged();
-            super.onPostExecute(logItems);
+            //super.onPostExecute(logItems);
         }
     }
 

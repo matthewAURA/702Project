@@ -38,7 +38,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         // A log entry will always have 1 header and 4 child fields
-        return 4;
+        return 1;
     }
 
     @Override
