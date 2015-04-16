@@ -11,9 +11,21 @@
         android:layout_height="wrap_content"
         android:text="Load Image"/>
 
+    <Button
+        android:id="@+id/loadContactsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Contacts"/>
+
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
         tools:src ="@drawable/abc_btn_check_material"/>
+    <ListView
+        android:id="@+id/contact_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
