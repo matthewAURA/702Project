@@ -10,6 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.util.List;
+import android.util.Log;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -22,14 +25,35 @@ public class MainActivity extends ActionBarActivity {
             BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()));
 
-            StringBuilder log=new StringBuilder();
+            StringBuilder log = new StringBuilder();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 log.append(line);
             }
-            TextView tv = (TextView)findViewById(R.id.textView1);
+            TextView tv = (TextView) findViewById(R.id.textView1);
             tv.setText(log.toString());
         } catch (IOException e) {
+        }
+
+        DatabaseHandler db = new DatabaseHandler(this);
+
+        /**
+         * CRUD Operations
+         * */
+        // Inserting log items
+        Log.d("Insert: ", "Inserting ..");
+        db.addLogItem(new LogItem(12, "my photo", "15-04-2015", "9.15am", "High priority"));
+        db.addLogItem(new LogItem(34, "my song", "16-04-2015", "7am", "High priority"));
+        Log.d("Update: ", "I got here ..");
+
+        // Reading all log items
+        Log.d("Reading: ", "Reading all log items..");
+        List<LogItem> log_items = db.getAllLogItems();
+
+        for (LogItem cn : log_items) {
+            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Date: " + cn.getDate() + " ,Time: " + cn.getTime() + " ,Tag Message: " + cn.getTagMessage();
+            // Writing Log Items to log
+            Log.d("Name: ", log);
         }
     }
 
