@@ -1,62 +1,36 @@
 package com.tp702_04.apps.project702;
 
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+public class MainActivity extends ListActivity {
 
-import java.util.List;
-import android.util.Log;
+    private ExpandableLogListAdapter expandableLogListAdapter;
 
-
-public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            Process process = Runtime.getRuntime().exec("logcat -d -v long");
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
 
-            StringBuilder log = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line);
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view);
+        expandableListView.setOnGroupClickListener(new OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
             }
-            TextView tv = (TextView) findViewById(R.id.textView1);
-            tv.setText(log.toString());
-        } catch (IOException e) {
-        }
+        });
 
-        DatabaseHandler db = new DatabaseHandler(this);
+        expandableLogListAdapter = new ExpandableLogListAdapter(this);
+        expandableListView.setAdapter(expandableLogListAdapter);
 
-        /**
-         * CRUD Operations
-         * */
-        // Inserting log items
-        Log.d("Insert: ", "Inserting ..");
-        db.addLogItem(new LogItem(12, "my photo", "15-04-2015", "9.15am", "High priority"));
-        db.addLogItem(new LogItem(34, "my song", "16-04-2015", "7am", "High priority"));
-        Log.d("Update: ", "I got here ..");
 
-        // Reading all log items
-        Log.d("Reading: ", "Reading all log items..");
-        List<LogItem> log_items = db.getAllLogItems();
-
-        for (LogItem cn : log_items) {
-            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Date: " + cn.getDate() + " ,Time: " + cn.getTime() + " ,Tag Message: " + cn.getTagMessage();
-            // Writing Log Items to log
-            Log.d("Name: ", log);
-        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
