@@ -31,6 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     // LogItems Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "resource_accessed_name";
+    private static final String KEY_APP = "app_name";
     private static final String KEY_DATE = "date";
     private static final String KEY_TIME = "time";
     private static final String KEY_TAG_MESSAGE = "tag_message";
@@ -44,7 +45,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_LOG_ITEMS_TABLE = "CREATE TABLE " + TABLE_LOG_ITEMS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_APP + " TEXT,"
                 + KEY_DATE + " TEXT," + KEY_TIME + " TEXT," + KEY_TAG_MESSAGE + " TEXT" + ")";
         db.execSQL(CREATE_LOG_ITEMS_TABLE);
     }
@@ -72,6 +73,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(KEY_ID, logitem.getID()); // Log Item ID
         values.put(KEY_NAME, logitem.getName()); // Log Item Resource Accessed Name
+        values.put(KEY_APP, logitem.getApp()); // Log Item App Name
         values.put(KEY_DATE, logitem.getDate()); // Log Item Date
         values.put(KEY_TIME, logitem.getTime()); // Log Item Time
         values.put(KEY_TAG_MESSAGE, logitem.getTagMessage()); // Log Item Tag Message
@@ -87,13 +89,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         Cursor cursor = db.query(TABLE_LOG_ITEMS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_DATE, KEY_TIME, KEY_TAG_MESSAGE }, KEY_ID + "=?",
+                        KEY_NAME, KEY_APP, KEY_DATE, KEY_TIME, KEY_TAG_MESSAGE }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         LogItem logitem = new LogItem(cursor.getInt(0),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
         // return log item
         DatabaseManager.getInstance().closeDatabase();
         return logitem;
@@ -116,9 +118,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 LogItem logitem = new LogItem();
                 logitem.setID(cursor.getInt(0));
                 logitem.setName(cursor.getString(1));
-                logitem.setDate(cursor.getString(2));
-                logitem.setTime(cursor.getString(3));
-                logitem.setTagMessage(cursor.getString(4));
+                logitem.setApp(cursor.getString(2));
+                logitem.setDate(cursor.getString(3));
+                logitem.setTime(cursor.getString(4));
+                logitem.setTagMessage(cursor.getString(5));
                 // Adding log item to list
                 logItemList.add(logitem);
             } while (cursor.moveToNext());

@@ -42,8 +42,8 @@ public class MainActivity extends ActionBarActivity {
          * */
         // Inserting log items
         Log.d("Insert: ", "Inserting ..");
-        db.addLogItem(new LogItem(12, "my photo", "15-04-2015", "9.15am", "High priority"));
-        db.addLogItem(new LogItem(34, "my song", "16-04-2015", "7am", "High priority"));
+        db.addLogItem(new LogItem(12, "my photo","maliciousapp", "15-04-2015", "9.15am", "High priority"));
+        db.addLogItem(new LogItem(34, "my song", "badapp", "16-04-2015", "7am", "High priority"));
         Log.d("Update: ", "I got here ..");
 
         // Reading all log items
@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
         List<LogItem> log_items = db.getAllLogItems();
 
         for (LogItem cn : log_items) {
-            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Date: " + cn.getDate() + " ,Time: " + cn.getTime() + " ,Tag Message: " + cn.getTagMessage();
+            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,App: " + cn.getApp() + " ,Date: " + cn.getDate() + " ,Time: " + cn.getTime() + " ,Tag Message: " + cn.getTagMessage();
             // Writing Log Items to log
             Log.d("Name: ", log);
         }

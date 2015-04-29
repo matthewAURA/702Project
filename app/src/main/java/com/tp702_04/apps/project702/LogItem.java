@@ -8,6 +8,7 @@ public class LogItem {
     //private variables
     int _id;
     String _resource_accessed_name;
+    String _app;
     String _date;
     String _time;
     String _tag_message;
@@ -16,9 +17,10 @@ public class LogItem {
         //empty constructor
     }
 
-    public LogItem(int _id, String _resource_accessed_name, String _date, String _time, String _tag_message){
+    public LogItem(int _id, String _resource_accessed_name, String _app, String _date, String _time, String _tag_message){
         this._id = _id;
         this._resource_accessed_name = _resource_accessed_name;
+        this._app = _app;
         this._date = _date;
         this._time = _time;
         this._tag_message = _tag_message;
@@ -43,6 +45,16 @@ public class LogItem {
     // setting resource accessed name
     public void setName(String _resource_accessed_name){
         this._resource_accessed_name = _resource_accessed_name;
+    }
+
+    // getting application that accesses the resource
+    public String getApp(){
+        return this._app;
+    }
+
+    // setting application that accesses the resource
+    public void setApp(String _app){
+        this._app = _app;
     }
 
     // getting date
