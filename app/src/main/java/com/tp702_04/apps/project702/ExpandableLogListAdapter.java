@@ -17,9 +17,17 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<LogItem> logItems;
 
-    public ExpandableLogListAdapter(Context newContext) {
+    public ExpandableLogListAdapter(Context newContext, ArrayList<LogItem> newLogItems) {
         this.context = newContext;
-        this.logItems = new ArrayList<>();
+        this.logItems = newLogItems;
+    }
+
+    public void addAll(ArrayList<LogItem> newLogItems) {
+        this.logItems.addAll(newLogItems);
+    }
+
+    public void clear() {
+        this.logItems.clear();
     }
 
     @Override
@@ -30,7 +38,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         // A log entry will always have 1 header and 4 child fields
-        return 4;
+        return 1;
     }
 
     @Override
@@ -88,7 +96,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textView = (TextView) convertView.findViewById(R.id.list_group_header);
-        textView.setText(logItem.getID());
+        textView.setText(Integer.toString(logItem.getID()));
 
         return convertView;
     }
