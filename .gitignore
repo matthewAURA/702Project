@@ -37,3 +37,9 @@ Thumbs.db
 .gradle
 build/
 .idea/gradle.xml
+*.iml
+
+#Repackager
+
+repackager/Apktool/
+repackager/aurasium/

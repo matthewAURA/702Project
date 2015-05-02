@@ -1,38 +1,69 @@
 package com.tp702_04.apps.project702;
 
+import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
+public class MainActivity extends Activity {
 
-public class MainActivity extends ActionBarActivity {
+    protected ExpandableLogListAdapter expandableLogListAdapter;
+    protected SwipeRefreshLayout swipeRefreshLayout;
+    private DatabaseHandler databaseHandler;
+
+    private class ReadDatabaseTask extends AsyncTask<DatabaseHandler, Void, List<LogItem>> {
+        @Override
+        protected List<LogItem> doInBackground(DatabaseHandler... params) {
+            return params[0].getAllLogItems();
+        }
+
+        @Override
+        protected void onPostExecute(List<LogItem> logItems) {
+            expandableLogListAdapter.clear();
+            expandableLogListAdapter.addAll((ArrayList<LogItem>) logItems);
+            expandableLogListAdapter.notifyDataSetChanged();
+            //super.onPostExecute(logItems);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            Process process = Runtime.getRuntime().exec("logcat -d -v long");
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
 
-            StringBuilder log=new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line);
+        final ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view);
+        expandableListView.setOnGroupClickListener(new OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
             }
-            TextView tv = (TextView)findViewById(R.id.textView1);
-            tv.setText(log.toString());
-        } catch (IOException e) {
-        }
-    }
+        });
 
+        databaseHandler = new DatabaseHandler(this);
+
+        expandableLogListAdapter = new ExpandableLogListAdapter(this, new ArrayList<LogItem>());
+        expandableListView.setAdapter(expandableLogListAdapter);
+
+        databaseHandler.addLogItem(new LogItem(12, "my photo", "15-04-2015", "9.15am", "High priority"));
+        databaseHandler.addLogItem(new LogItem(34, "my song", "16-04-2015", "7am", "High priority"));
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new ReadDatabaseTask().execute(databaseHandler);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
