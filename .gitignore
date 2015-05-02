@@ -36,4 +36,10 @@ Thumbs.db
 #.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
+.idea/gradle.xml
 *.iml
+
+#Repackager
+
+repackager/Apktool/
+repackager/aurasium/
