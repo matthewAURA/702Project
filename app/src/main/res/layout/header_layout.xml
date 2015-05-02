@@ -6,6 +6,7 @@
     <TextView
         android:id="@+id/list_group_header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_header_height" />
+        android:layout_height="@dimen/list_header_height"
+        android:text="@string/list_header" />
 
 </LinearLayout>
