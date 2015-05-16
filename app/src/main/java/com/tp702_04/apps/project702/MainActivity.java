@@ -62,6 +62,8 @@ public class MainActivity extends Activity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                findViewById(R.id.title).setVisibility(View.GONE);
+                findViewById(R.id.instr).setVisibility(View.GONE);
                 new ReadDatabaseTask().execute(databaseHandler);
                 swipeRefreshLayout.setRefreshing(false);
             }
