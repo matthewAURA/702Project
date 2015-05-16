@@ -31,4 +31,11 @@
         android:text="@string/list_item_4"
         android:layout_weight="1" />
 
+    <TextView
+        android:id="@+id/list_child_5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_child_height"
+        android:text="@string/list_item_5"
+        android:layout_weight="1" />
+
 </LinearLayout>
