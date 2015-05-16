@@ -1,9 +1,11 @@
 package com.tp702_04.apps.project702;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,16 +49,27 @@ public class MainActivity extends Activity {
             }
         });
 
-        databaseHandler = new DatabaseHandler(this);
+        Thread t = new Thread(){
+            public void run(){
+                getApplicationContext().startService(
+                        new Intent(getApplicationContext(), DetectionService.class)
+                );
+            }
+        };
+        t.start();
 
         expandableLogListAdapter = new ExpandableLogListAdapter(this, new ArrayList<LogItem>());
         expandableListView.setAdapter(expandableLogListAdapter);
 
-        int stringId = this.getApplicationInfo().labelRes;
-        String appName = this.getString(stringId);
+        Intent testIntent = new Intent(this, DetectionService.class);
+        testIntent.putExtra("resource_accessed_name", "Resource Accessed");
+        testIntent.putExtra("app_name", "App Name");
+        testIntent.putExtra("date", "Date");
+        testIntent.putExtra("time", "Time");
+        testIntent.putExtra("tag_message", "Message");
+        startService(testIntent);
 
-        databaseHandler.addLogItem(new LogItem(12, "my photo", appName, "15-04-2015", "9.15am", "High priority"));
-        databaseHandler.addLogItem(new LogItem(34, "my song", appName, "16-04-2015", "7am", "High priority"));
+        databaseHandler = new DatabaseHandler(this);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

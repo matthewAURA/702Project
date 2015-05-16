@@ -24,7 +24,14 @@ public class LogItem {
         this._date = _date;
         this._time = _time;
         this._tag_message = _tag_message;
+    }
 
+    public LogItem(String _resource_accessed_name, String _app, String _date, String _time, String _tag_message){
+        this._resource_accessed_name = _resource_accessed_name;
+        this._app = _app;
+        this._date = _date;
+        this._time = _time;
+        this._tag_message = _tag_message;
     }
 
     // getting ID
