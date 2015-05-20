@@ -1,38 +1,54 @@
 .class public Lcom/secure/ActionBarActivity;
-.super Lcom/secure/Activity;
+.super Landroid/support/v7/app/ActionBarActivity;
 .source "ActionBarActivity.java"
 
 
 # direct methods
 .method public constructor <init>()V
-    .locals 4
+    .locals 0
 
     .prologue
-    .line 12
-    invoke-direct {p0}, Lcom/secure/Activity;-><init>()V
-
     .line 13
-    invoke-virtual {p0}, Lcom/secure/ActionBarActivity;->getApplicationContext()Landroid/content/Context;
+    invoke-direct {p0}, Landroid/support/v7/app/ActionBarActivity;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public getContentResolver()Landroid/content/ContentResolver;
+    .locals 2
+
+    .prologue
+    .line 24
+    const-string v0, "SecureActivity"
+
+    const-string v1, "getContentResolver"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 25
+    invoke-super {p0}, Landroid/support/v7/app/ActionBarActivity;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
 
-    .line 14
-    .local v0, "context":Landroid/content/Context;
-    const-string v2, "ActionBarActivity Activity Created"
+    return-object v0
+.end method
 
-    .line 15
-    .local v2, "text":Ljava/lang/CharSequence;
-    const/4 v1, 0x0
+.method protected onCreate(Landroid/os/Bundle;)V
+    .locals 2
+    .param p1, "savedInstanceState"    # Landroid/os/Bundle;
 
+    .prologue
     .line 17
-    .local v1, "duration":I
-    invoke-static {v0, v2, v1}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
+    const-string v0, "SecureActivity"
 
-    move-result-object v3
+    const-string v1, "onCreate"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 18
-    .local v3, "toast":Landroid/widget/Toast;
-    invoke-virtual {v3}, Landroid/widget/Toast;->show()V
+    invoke-super {p0, p1}, Landroid/support/v7/app/ActionBarActivity;->onCreate(Landroid/os/Bundle;)V
 
     .line 20
     return-void
