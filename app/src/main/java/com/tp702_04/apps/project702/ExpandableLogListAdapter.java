@@ -56,12 +56,15 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
                 return_value = logItem.getName();
                 break;
             case 2:
-                return_value = logItem.getDate();
+                return_value = logItem.getApp();
                 break;
             case 3:
-                return_value = logItem.getTime();
+                return_value = logItem.getDate();
                 break;
             case 4:
+                return_value = logItem.getTime();
+                break;
+            case 5:
                 return_value = logItem.getTagMessage();
                 break;
             default:
@@ -96,7 +99,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textView = (TextView) convertView.findViewById(R.id.list_group_header);
-        textView.setText(Integer.toString(logItem.getID()));
+        textView.setText(logItem.getName());
 
         return convertView;
     }
@@ -113,13 +116,16 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
         TextView textViewName = (TextView) convertView.findViewById(R.id.list_child_1);
         textViewName.setText(logItem.getName());
 
-        TextView textViewDate = (TextView) convertView.findViewById(R.id.list_child_2);
+        TextView textViewApp = (TextView) convertView.findViewById(R.id.list_child_2);
+        textViewApp.setText(logItem.getApp());
+
+        TextView textViewDate = (TextView) convertView.findViewById(R.id.list_child_3);
         textViewDate.setText(logItem.getDate());
 
-        TextView textViewTime = (TextView) convertView.findViewById(R.id.list_child_3);
+        TextView textViewTime = (TextView) convertView.findViewById(R.id.list_child_4);
         textViewTime.setText(logItem.getTime());
 
-        TextView textViewTagMessage = (TextView) convertView.findViewById(R.id.list_child_4);
+        TextView textViewTagMessage = (TextView) convertView.findViewById(R.id.list_child_5);
         textViewTagMessage.setText(logItem.getTagMessage());
 
         return convertView;
