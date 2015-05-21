@@ -52,17 +52,6 @@ public class MainActivity extends Activity {
         expandableLogListAdapter = new ExpandableLogListAdapter(this, new ArrayList<LogItem>());
         expandableListView.setAdapter(expandableLogListAdapter);
 
-<<<<<<< HEAD
-        databaseHandler.addLogItem(new LogItem(12, "my photo", "15-04-2015","", "9.15am", "High priority"));
-        databaseHandler.addLogItem(new LogItem(34, "my song", "16-04-2015","", "7am", "High priority"));
-=======
-        int stringId = this.getApplicationInfo().labelRes;
-        String appName = this.getString(stringId);
-
-        databaseHandler.addLogItem(new LogItem(12, "my photo", appName, "15-04-2015", "9.15am", "High priority"));
-        databaseHandler.addLogItem(new LogItem(34, "my song", appName, "16-04-2015", "7am", "High priority"));
->>>>>>> 670fc74a4f89d4dbefd0f0f74cd171850ef70148
-
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
