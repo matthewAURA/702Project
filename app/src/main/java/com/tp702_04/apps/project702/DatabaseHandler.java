@@ -71,7 +71,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, logitem.getID()); // Log Item ID
         values.put(KEY_NAME, logitem.getName()); // Log Item Resource Accessed Name
         values.put(KEY_APP, logitem.getApp()); // Log Item App Name
         values.put(KEY_DATE, logitem.getDate()); // Log Item Date

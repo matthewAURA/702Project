@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        ButtonRectangle loadContactsButton = (ButtonRectangle) findViewById(R.id.loadContactsButton);;
+        ButtonRectangle loadContactsButton = (ButtonRectangle) findViewById(R.id.loadContactsButton);
 
         loadContactsButton.setOnClickListener(new View.OnClickListener() {
             @Override

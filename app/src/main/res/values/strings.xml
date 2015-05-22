@@ -5,7 +5,8 @@
     <string name="stop_service">Stop Detection</string>
     <string name="list_header">ID</string>
     <string name="list_item_1">Resource Name</string>
-    <string name="list_item_2">Date</string>
-    <string name="list_item_3">Time</string>
-    <string name="list_item_4">Tag Message</string>
+    <string name="list_item_2">App Name</string>
+    <string name="list_item_3">Date</string>
+    <string name="list_item_4">Time</string>
+    <string name="list_item_5">Tag Message</string>
 </resources>
