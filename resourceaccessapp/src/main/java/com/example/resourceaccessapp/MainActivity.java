@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        Button loadContactsButton = (Button) findViewById(R.id.loadContactsButton);;
+        Button loadContactsButton = (Button) findViewById(R.id.loadContactsButton);
 
         loadContactsButton.setOnClickListener(new View.OnClickListener() {
             @Override
