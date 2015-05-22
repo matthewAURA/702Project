@@ -21,4 +21,18 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <TextView android:id="@+id/title"
+        android:gravity="center"
+        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resource Access Viewer" />
+    <TextView android:id="@+id/instr"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Swipe down to view the access log"
+        android:layout_below="@id/title"/>
+
 </RelativeLayout>
