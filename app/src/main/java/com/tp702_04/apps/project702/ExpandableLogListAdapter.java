@@ -66,7 +66,6 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        System.out.println(logItems.size());
         LogItem logItem = logItems.get(groupPosition);
 
         if (convertView == null) {
@@ -82,7 +81,6 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        System.out.println(logItems.size());
         LogItem logItem = logItems.get(groupPosition);
 
         if (convertView == null) {
