@@ -21,7 +21,6 @@ public class DatabaseManager {
             instance = new DatabaseManager();
             myDatabaseHandler = helper;
         }
-        //Log.d("update", "i came here to initialise an instance");
     }
 
     public static synchronized DatabaseManager getInstance() {
@@ -29,7 +28,6 @@ public class DatabaseManager {
             throw new IllegalStateException(DatabaseManager.class.getSimpleName() +
                     " is not initialized, call initializeInstance(..) method first.");
         }
-        //Log.d("update1", "i came here to get an instance");
         return instance;
     }
 
@@ -38,7 +36,6 @@ public class DatabaseManager {
             // Opening new database
             myDatabase = myDatabaseHandler.getWritableDatabase();
         }
-        //Log.d("update2", "i came here to open the database");
         return myDatabase;
     }
 
@@ -47,6 +44,5 @@ public class DatabaseManager {
             // Closing database
             myDatabase.close();
         }
-        //Log.d("update3", "i came here to close the database");
     }
 }

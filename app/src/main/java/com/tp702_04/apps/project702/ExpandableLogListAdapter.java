@@ -17,9 +17,9 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<LogItem> logItems;
 
-    public ExpandableLogListAdapter(Context newContext, ArrayList<LogItem> newLogItems) {
+    public ExpandableLogListAdapter(Context newContext) {
         this.context = newContext;
-        this.logItems = newLogItems;
+        this.logItems = new ArrayList<>();
     }
 
     public void addAll(ArrayList<LogItem> newLogItems) {
@@ -37,7 +37,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        // A log entry will always have 1 header and 4 child fields
+        // Children refers to the number of Children Layouts
         return 1;
     }
 
@@ -47,32 +47,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        Object return_value;
-        LogItem logItem = logItems.get(groupPosition);
-
-        switch(childPosition) {
-            case 1:
-                return_value = logItem.getName();
-                break;
-            case 2:
-                return_value = logItem.getApp();
-                break;
-            case 3:
-                return_value = logItem.getDate();
-                break;
-            case 4:
-                return_value = logItem.getTime();
-                break;
-            case 5:
-                return_value = logItem.getTagMessage();
-                break;
-            default:
-                return_value = logItem.getID();
-
-        }
-        return return_value;
-    }
+    public Object getChild(int groupPosition, int childPosition) { return logItems.get(groupPosition); }
 
     @Override
     public long getGroupId(int groupPosition) {
@@ -91,6 +66,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        System.out.println(logItems.size());
         LogItem logItem = logItems.get(groupPosition);
 
         if (convertView == null) {
@@ -99,13 +75,14 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textView = (TextView) convertView.findViewById(R.id.list_group_header);
-        textView.setText(logItem.getName());
+        textView.setText(logItem.getApp());
 
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        System.out.println(logItems.size());
         LogItem logItem = logItems.get(groupPosition);
 
         if (convertView == null) {
@@ -116,16 +93,13 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
         TextView textViewName = (TextView) convertView.findViewById(R.id.list_child_1);
         textViewName.setText(logItem.getName());
 
-        TextView textViewApp = (TextView) convertView.findViewById(R.id.list_child_2);
-        textViewApp.setText(logItem.getApp());
-
-        TextView textViewDate = (TextView) convertView.findViewById(R.id.list_child_3);
+        TextView textViewDate = (TextView) convertView.findViewById(R.id.list_child_2);
         textViewDate.setText(logItem.getDate());
 
-        TextView textViewTime = (TextView) convertView.findViewById(R.id.list_child_4);
+        TextView textViewTime = (TextView) convertView.findViewById(R.id.list_child_3);
         textViewTime.setText(logItem.getTime());
 
-        TextView textViewTagMessage = (TextView) convertView.findViewById(R.id.list_child_5);
+        TextView textViewTagMessage = (TextView) convertView.findViewById(R.id.list_child_4);
         textViewTagMessage.setText(logItem.getTagMessage());
 
         return convertView;
