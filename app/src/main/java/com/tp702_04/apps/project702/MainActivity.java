@@ -32,7 +32,6 @@ public class MainActivity extends Activity {
             expandableLogListAdapter.clear();
             expandableLogListAdapter.addAll((ArrayList<LogItem>) logItems);
             expandableLogListAdapter.notifyDataSetChanged();
-            //super.onPostExecute(logItems);
         }
     }
 
@@ -49,16 +48,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        Thread t = new Thread(){
-            public void run(){
-                getApplicationContext().startService(
-                        new Intent(getApplicationContext(), DetectionService.class)
-                );
-            }
-        };
-        t.start();
-
-        expandableLogListAdapter = new ExpandableLogListAdapter(this, new ArrayList<LogItem>());
+        expandableLogListAdapter = new ExpandableLogListAdapter(this);
         expandableListView.setAdapter(expandableLogListAdapter);
 
         Intent testIntent = new Intent(this, DetectionService.class);
