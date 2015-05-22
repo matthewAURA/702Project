@@ -23,10 +23,11 @@ import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
 
+
 /**
  * Created by Simon on 9/04/2015.
  */
-public class AccessService extends com.secure.SecureIntentService {
+public class AccessService extends IntentService {
     public AccessService(){
         super("AccessService");
     }
@@ -61,29 +62,9 @@ public class AccessService extends com.secure.SecureIntentService {
         Log.d(LOG_TAG,"Getting Content Resolver");
 
 
-
         ContentResolver cr = getContentResolver();
 
-        //test
-        Class test = this.getClass();
-        try {
-            Method[] methods = test.getMethods();
-            for (Method i : methods){
-                Log.d("Reflection",i.getName());
-            }
-            Method m = test.getMethod("hello",null);
-            m.invoke(null,null);
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-
-        Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null); Log.d("hi","hi");
+        Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
         if (cur.getCount() > 0 && false) {
             while (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
