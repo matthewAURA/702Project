@@ -14,12 +14,15 @@ import android.provider.MediaStore;
 import android.util.Log;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
+
 
 /**
  * Created by Simon on 9/04/2015.
@@ -56,10 +59,13 @@ public class AccessService extends IntentService {
     }
 
     private void accessContacts(){
+        Log.d(LOG_TAG,"Getting Content Resolver");
+
+
         ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI,
-                null, null, null, null);
-        if (cur.getCount() > 0) {
+
+        Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
+        if (cur.getCount() > 0 && false) {
             while (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
