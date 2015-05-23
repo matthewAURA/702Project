@@ -57,7 +57,6 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 contactsAdapter.clear();
                 ContentResolver cr = getContentResolver();
-                ResourceLogger.logQuery(ContactsContract.RawContacts.CONTENT_URI);
                 Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI,
                         null, null, null, null);
                 if (cur.getCount() > 0) {
