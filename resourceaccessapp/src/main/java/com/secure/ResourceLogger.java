@@ -3,6 +3,7 @@ package com.secure;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,17 +17,19 @@ public class ResourceLogger {
 
     private static final String BROADCAST_URI = "DetectionServiceMessage";
     public static Context context;
-    private static Queue<Intent> pendingIntents = null;
+    private static Queue<ComparableIntent> pendingIntents = null;
 
     private static void sendMessage(Intent i){
         if (pendingIntents == null){
-            pendingIntents = new PriorityQueue<Intent>();
+            pendingIntents = new PriorityQueue<ComparableIntent>();
         }
-        pendingIntents.add(i);
+        pendingIntents.add(new ComparableIntent(i));
         context = InjectionService.getServiceContext();
+        Log.d("Secure", "Attempting to Send Broadcast");
         if (context != null) {
             while (pendingIntents.peek() != null) {
-                context.sendBroadcast(pendingIntents.poll());
+                Log.d("Secure", "Sending Broadcast");
+                context.sendBroadcast(pendingIntents.poll().getIntent());
             }
         }
     }

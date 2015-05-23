@@ -21,12 +21,12 @@ public class InjectionService extends IntentService {
 
     public InjectionService(String name) {
         super(name);
+        Log.d("Secure","Attempting to Start Injection Service");
         if (!serviceIsRunning){
             serviceIsRunning = true;
         }else{
             this.stopSelf();
         }
-        Log.d("Secure", "InjectionService Created");
         InjectionService.instanceOf = this;
     }
 
@@ -38,6 +38,10 @@ public class InjectionService extends IntentService {
 
 
     public static Context getServiceContext(){
-        return instanceOf.getBaseContext();
+        if (instanceOf != null) {
+            return instanceOf.getBaseContext();
+        }else{
+            return null;
+        }
     }
 }
