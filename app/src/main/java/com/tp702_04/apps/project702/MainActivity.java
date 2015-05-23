@@ -49,15 +49,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        Thread t = new Thread(){
-            public void run(){
-                getApplicationContext().startService(
-                        new Intent(getApplicationContext(), DetectionService.class)
-                );
-            }
-        };
-        t.start();
-
         expandableLogListAdapter = new ExpandableLogListAdapter(this, new ArrayList<LogItem>());
         expandableListView.setAdapter(expandableLogListAdapter);
 

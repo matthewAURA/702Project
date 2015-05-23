@@ -7,6 +7,8 @@
         android:id="@+id/list_group_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_header_height"
-        android:text="@string/list_header" />
+        android:text="@string/list_header"
+        android:gravity="center_vertical"
+        android:textColor="@color/dblue"/>
 
 </LinearLayout>
