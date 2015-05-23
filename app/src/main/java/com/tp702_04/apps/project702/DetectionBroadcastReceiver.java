@@ -10,6 +10,12 @@ import android.content.Intent;
 public class DetectionBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        context.startService(intent);
+        Intent newIntent = new Intent(context, DetectionService.class);
+        newIntent.putExtra("resource_accessed_name", intent.getStringExtra("resource_accessed_name"));
+        newIntent.putExtra("app_name",intent.getStringExtra("app_name"));
+        newIntent.putExtra("date", intent.getStringExtra("date"));
+        newIntent.putExtra("time", intent.getStringExtra("time"));
+        newIntent.putExtra("tag_message", intent.getStringExtra("tag_message"));
+        context.startService(newIntent);
     }
 }
