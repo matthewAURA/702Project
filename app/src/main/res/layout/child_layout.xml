@@ -40,22 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
         android:paddingRight="4sp"
-        android:text="@string/list_item_4"
-        android:textStyle="bold"
-        android:layout_weight="1"
-        android:textColor="@color/dblue"
-        android:layout_below="@id/list_child_3_title"/>
-
-    <TextView
-        android:id="@+id/list_child_5_title"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/list_child_height"
-        android:paddingRight="4sp"
         android:text="@string/list_item_5"
         android:textStyle="bold"
         android:layout_weight="1"
         android:textColor="@color/dblue"
-        android:layout_below="@id/list_child_4_title"/>
+        android:layout_below="@id/list_child_3_title"/>
 
     <TextView
         android:id="@+id/list_child_1"
