@@ -2,6 +2,7 @@ package com.example.resourceaccessapp;
 
 import android.app.IntentService;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
@@ -22,6 +23,9 @@ import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
+
+import com.secure.InjectionService;
+import com.secure.ResourceLogger;
 
 
 /**
@@ -60,10 +64,13 @@ public class AccessService extends IntentService {
 
     private void accessContacts(){
         Log.d(LOG_TAG,"Getting Content Resolver");
+        Context c = this.getApplicationContext();
 
+
+        this.startService(new Intent(this, InjectionService.class));
 
         ContentResolver cr = getContentResolver();
-
+        ResourceLogger.logQuery(ContactsContract.RawContacts.CONTENT_URI);
         Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
         if (cur.getCount() > 0 && false) {
             while (cur.moveToNext()) {
