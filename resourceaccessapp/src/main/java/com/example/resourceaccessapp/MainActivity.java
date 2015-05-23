@@ -25,7 +25,6 @@ import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {

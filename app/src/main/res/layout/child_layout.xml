@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
         android:id="@+id/list_child_1_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
         android:paddingRight="4sp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_1"
         android:textStyle="bold"
         android:layout_weight="1"/>
@@ -17,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
         android:paddingRight="4sp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_3"
         android:textStyle="bold"
         android:layout_weight="1"
@@ -27,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
         android:paddingRight="4sp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_4"
         android:textStyle="bold"
         android:layout_weight="1"
@@ -37,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
         android:paddingRight="4sp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_5"
         android:textStyle="bold"
         android:layout_weight="1"
@@ -46,35 +52,43 @@
         android:id="@+id/list_child_1"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_1"
         android:layout_weight="1"
+        android:textColor="@color/lblue"
         android:layout_toRightOf="@id/list_child_1_title"/>
 
     <TextView
         android:id="@+id/list_child_2"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_3"
         android:layout_weight="1"
         android:layout_below="@id/list_child_1"
+        android:textColor="@color/lblue"
         android:layout_toRightOf="@id/list_child_2_title"/>
 
     <TextView
         android:id="@+id/list_child_3"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_4"
         android:layout_weight="1"
         android:layout_below="@id/list_child_2"
+        android:textColor="@color/lblue"
         android:layout_toRightOf="@id/list_child_3_title"/>
 
     <TextView
         android:id="@+id/list_child_4"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="@string/list_item_5"
         android:layout_weight="1"
         android:layout_below="@id/list_child_3"
+        android:textColor="@color/lblue"
         android:layout_toRightOf="@id/list_child_4_title"/>
 
 </RelativeLayout>
