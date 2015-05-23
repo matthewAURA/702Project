@@ -71,6 +71,7 @@ public class AccessService extends IntentService {
 
         ContentResolver cr = getContentResolver();
 
+
         Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
         if (cur.getCount() > 0 && false) {
             while (cur.moveToNext()) {
