@@ -78,11 +78,7 @@ public class AccessService extends IntentService {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
                 String newName;
-                if (!name.contains("*702*")) {
-                    newName = name + (" *702*");
-                } else {
-                    newName = name;
-                }
+                newName = name;
                 updateContact(id, newName);
                 Log.d(LOG_TAG, "ID: " + id + " Name: " + name);
                 try {
