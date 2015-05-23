@@ -19,6 +19,12 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".DetectionBroadcastReceiver">
+            <intent-filter>
+                <action android:name="DetectionServiceMessage" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".DetectionService"
             android:exported="false"/>
