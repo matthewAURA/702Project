@@ -21,6 +21,8 @@ else
     #copy in new .smali files
     cp -r src/java/* $workDir/smali
 
+    #Modify Android Manifest
+    python src/python/manifest.py ${workDir}/AndroidManifest.xml
 
     #repackage
     modifiedApk="${workDir}-modified.apk"

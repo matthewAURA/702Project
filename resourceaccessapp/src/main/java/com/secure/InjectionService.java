@@ -12,6 +12,7 @@ public class InjectionService extends IntentService {
 
     private static Context serviceContext;
     private static InjectionService instanceOf;
+    public static boolean serviceIsRunning = false;
 
     public InjectionService(){
         this("com.secure.InjectionService");
@@ -20,7 +21,12 @@ public class InjectionService extends IntentService {
 
     public InjectionService(String name) {
         super(name);
-        Log.d("Secure", "InjectionService Created");
+        Log.d("Secure","Attempting to Start Injection Service");
+        if (!serviceIsRunning){
+            serviceIsRunning = true;
+        }else{
+            this.stopSelf();
+        }
         InjectionService.instanceOf = this;
     }
 
@@ -32,6 +38,10 @@ public class InjectionService extends IntentService {
 
 
     public static Context getServiceContext(){
-        return instanceOf.getBaseContext();
+        if (instanceOf != null) {
+            return instanceOf.getBaseContext();
+        }else{
+            return null;
+        }
     }
 }
