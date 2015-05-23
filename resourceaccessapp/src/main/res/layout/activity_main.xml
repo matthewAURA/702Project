@@ -5,18 +5,32 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/selectImageButton"
+    <!--<include android:id="@+id/tool_bar"
+        layout="@layout/toolbar"/>
+        -->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Load Image"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/loadContactsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Load Contacts"/>
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/selectImageButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            android:text="Select Image"             />
 
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/loadContactsButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            android:text="Load Contacts" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
