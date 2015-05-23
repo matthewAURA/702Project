@@ -12,9 +12,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <service android:name=".AccessService" />
-        <service android:name="com.secure.InjectionService" android:enabled="true"/>
-
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >

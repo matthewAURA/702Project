@@ -55,6 +55,6 @@ public class ResourceLogger {
         testIntent.putExtra("time", time.format(date));
         testIntent.putExtra("tag_message", uri.toString());
 
-
+        
     }
 }

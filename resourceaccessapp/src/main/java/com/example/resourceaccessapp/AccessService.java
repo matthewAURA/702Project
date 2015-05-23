@@ -67,7 +67,6 @@ public class AccessService extends IntentService {
         Context c = this.getApplicationContext();
 
 
-        this.startService(new Intent(this, InjectionService.class));
 
         ContentResolver cr = getContentResolver();
 
