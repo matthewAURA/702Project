@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.secure.ResourceLogger;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 contactsAdapter.clear();
                 ContentResolver cr = getContentResolver();
+                ResourceLogger.logQuery(ContactsContract.RawContacts.CONTENT_URI);
                 Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI,
                         null, null, null, null);
                 if (cur.getCount() > 0) {

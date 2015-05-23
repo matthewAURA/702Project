@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class ResourceLogger {
 
-    private static final String BROADCAST_URI = "";
+    private static final String BROADCAST_URI = "DetectionServiceMessage";
     public static Context context;
 
 
@@ -31,7 +31,7 @@ public class ResourceLogger {
         testIntent.putExtra("date", "Date");
         testIntent.putExtra("time", "Time");
         testIntent.putExtra("tag_message", uri.toString());
-
+        context = InjectionService.getServiceContext();
         if (context != null) {
             context.sendBroadcast(testIntent);
         }

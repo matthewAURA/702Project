@@ -11,6 +11,7 @@ import android.util.Log;
 public class InjectionService extends IntentService {
 
     private static Context serviceContext;
+    private static InjectionService instanceOf;
 
     public InjectionService(){
         this("com.secure.InjectionService");
@@ -20,14 +21,17 @@ public class InjectionService extends IntentService {
     public InjectionService(String name) {
         super(name);
         Log.d("Secure", "InjectionService Created");
+        InjectionService.instanceOf = this;
     }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
         InjectionService.serviceContext = this.getApplicationContext();
     }
 
+
     public static Context getServiceContext(){
-        return serviceContext;
+        return instanceOf.getBaseContext();
     }
 }
