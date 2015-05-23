@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
         android:paddingRight="4sp"
-        android:text="@string/list_item_2"
+        android:text="@string/list_item_3"
         android:textStyle="bold"
         android:layout_weight="1"
         android:textColor="@color/dblue"
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
         android:paddingRight="4sp"
-        android:text="@string/list_item_3"
+        android:text="@string/list_item_4"
         android:textStyle="bold"
         android:layout_weight="1"
         android:textColor="@color/dblue"
@@ -69,7 +69,7 @@
         android:id="@+id/list_child_2"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item_2"
+        android:text="@string/list_item_3"
         android:layout_weight="1"
         android:layout_below="@id/list_child_1"
         android:layout_toRightOf="@id/list_child_2_title"/>
@@ -78,7 +78,7 @@
         android:id="@+id/list_child_3"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item_3"
+        android:text="@string/list_item_4"
         android:layout_weight="1"
         android:layout_below="@id/list_child_2"
         android:layout_toRightOf="@id/list_child_3_title"/>
@@ -87,18 +87,9 @@
         android:id="@+id/list_child_4"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item_4"
+        android:text="@string/list_item_5"
         android:layout_weight="1"
         android:layout_below="@id/list_child_3"
         android:layout_toRightOf="@id/list_child_4_title"/>
-
-    <TextView
-        android:id="@+id/list_child_5"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/list_child_height"
-        android:text="@string/list_item_5"
-        android:layout_weight="1"
-        android:layout_below="@id/list_child_4"
-        android:layout_toRightOf="@id/list_child_5_title"/>
 
 </RelativeLayout>
