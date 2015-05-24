@@ -40,7 +40,7 @@ public class ResourceLogger {
     public static void logQuery(Uri uri){
         Intent intent = new Intent(ResourceLogger.BROADCAST_URI);
         intent.putExtra("resource_accessed_name", "Contacts");
-        intent.putExtra("app_name", "App Name");
+        intent.putExtra("app_name", context.getPackageName());
         Date date = new Date();
         date.setTime(System.currentTimeMillis());
 

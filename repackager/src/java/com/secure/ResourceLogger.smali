@@ -66,7 +66,11 @@
     .line 43
     const-string v4, "app_name"
 
-    const-string v5, "App Name"
+    sget-object v5, Lcom/secure/ResourceLogger;->context:Landroid/content/Context;
+
+    invoke-virtual {v5}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v5
 
     invoke-virtual {v2, v4, v5}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
