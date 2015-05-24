@@ -11,6 +11,8 @@ import android.util.Log;
 public class InjectionService extends IntentService {
 
     private static Context serviceContext;
+    private static InjectionService instanceOf;
+    public static boolean serviceIsRunning = false;
 
     public InjectionService(){
         this("com.secure.InjectionService");
@@ -19,15 +21,27 @@ public class InjectionService extends IntentService {
 
     public InjectionService(String name) {
         super(name);
-        Log.d("Secure", "InjectionService Created");
+        Log.d("Secure","Attempting to Start Injection Service");
+        if (!serviceIsRunning){
+            serviceIsRunning = true;
+        }else{
+            this.stopSelf();
+        }
+        InjectionService.instanceOf = this;
     }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
         InjectionService.serviceContext = this.getApplicationContext();
     }
 
+
     public static Context getServiceContext(){
-        return serviceContext;
+        if (instanceOf != null) {
+            return instanceOf.getBaseContext();
+        }else{
+            return null;
+        }
     }
 }

@@ -23,5 +23,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile files('libs/dexmaker-1.2.jar')
+    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
 
 }

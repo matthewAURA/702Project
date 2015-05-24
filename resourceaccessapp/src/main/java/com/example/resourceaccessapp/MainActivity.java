@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,9 +20,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.secure.InjectionService;
+import com.secure.ResourceLogger;
+import com.gc.materialdesign.views.ButtonRectangle;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -33,9 +37,17 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
 
-        Button selectImageButton = (Button) findViewById(R.id.selectImageButton);
+
+        //Test
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        //setSupportActionBar(toolbar);
+
+        ButtonRectangle selectImageButton = (ButtonRectangle) findViewById(R.id.selectImageButton);
         this.targetImage = (ImageView) findViewById(R.id.imageView);
         this.targetImage.setVisibility(View.GONE);
 
@@ -48,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        Button loadContactsButton = (Button) findViewById(R.id.loadContactsButton);
+        ButtonRectangle loadContactsButton = (ButtonRectangle) findViewById(R.id.loadContactsButton);
 
         loadContactsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
                     while (cur.moveToNext()) {
                         String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
                         String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
-                        contactsAdapter.add("ID: " + id + " Name: " + name);
+                        contactsAdapter.add(name);
                     }
                 }
             }

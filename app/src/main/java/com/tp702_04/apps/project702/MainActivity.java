@@ -54,14 +54,6 @@ public class MainActivity extends Activity {
         expandableLogListAdapter = new ExpandableLogListAdapter(this);
         expandableListView.setAdapter(expandableLogListAdapter);
 
-        Intent testIntent = new Intent(this, DetectionService.class);
-        testIntent.putExtra("resource_accessed_name", "Resource Accessed");
-        testIntent.putExtra("app_name", "App Name");
-        testIntent.putExtra("date", "Date");
-        testIntent.putExtra("time", "Time");
-        testIntent.putExtra("tag_message", "Message");
-        startService(testIntent);
-
         databaseHandler = new DatabaseHandler(this);
 
 

@@ -67,21 +67,17 @@ public class AccessService extends IntentService {
         Context c = this.getApplicationContext();
 
 
-        this.startService(new Intent(this, InjectionService.class));
 
         ContentResolver cr = getContentResolver();
-        ResourceLogger.logQuery(ContactsContract.RawContacts.CONTENT_URI);
+
+
         Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
         if (cur.getCount() > 0 && false) {
             while (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
                 String newName;
-                if (!name.contains("*702*")) {
-                    newName = name + (" *702*");
-                } else {
-                    newName = name;
-                }
+                newName = name;
                 updateContact(id, newName);
                 Log.d(LOG_TAG, "ID: " + id + " Name: " + name);
                 try {

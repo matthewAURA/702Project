@@ -2,6 +2,7 @@
 
 
 import re,sys
+import xml.dom.minidom as xml
 #open the file from stdin
 
 
@@ -79,21 +80,62 @@ class MethodReplace:
         str+=")V"
         return str
 
+
+
+def findMainActivity():
+    manifestFile = sys.argv[2]
+    with open(manifestFile) as manifest:
+        xmlManifest =  xml.parseString(manifest.read())
+        nodes = xmlManifest.getElementsByTagName('activity')
+        for node in nodes:
+            intentFilter = node.getElementsByTagName('intent-filter')
+            for filter in intentFilter:
+                actions = filter.getElementsByTagName('action')
+                for action in actions:
+                    if action.attributes["android:name"].value == "android.intent.action.MAIN":
+                        return node.attributes["android:name"].value
+    return None
+
+def parseFileHead(mainActivity,head):
+    if head.split(" ")[0] == ".class" and head.split(" ")[-1].strip("\n") == mainActivity:
+        return True
+    else:
+        return False
+
+def injectServiceStart(activtiy,line):
+    if ";->onCreate(Landroid/os/Bundle;)V" in line:
+        print "Found Main line"
+        print line
+        line = line +"\n\tinvoke-virtual {p0}, "+activtiy+"->getApplicationContext()Landroid/content/Context;\n"+\
+        "\tmove-result-object v4\n"+\
+        "\tsput-object v4, Lcom/secure/ResourceLogger;->context:Landroid/content/Context;\n"
+    return line
+
+
+
 def main():
     injector = MethodInjector()
-    if (len(sys.argv) < 2):
-        print "usage: rewrite.py [application file] [method joinpoints file]"
+    mainActivity = findMainActivity()
+    mainActivity = "L"+"/".join(mainActivity.split("."))+";"
+    if (len(sys.argv) < 3):
+        print "usage: rewrite.py [application file] [AndroidManifest.xml]"
     else:
         fname = sys.argv[1]
         print fname
         out = ""
         with open(fname,'r') as file:
-            for line in file:
-                out+= injector.swapLine(line)
+            lines = file.read().split("\n")
+            for i in range(0,len(lines)):
+                if (i == 0):
+                    isMain = parseFileHead(mainActivity,lines[i])
+                if (isMain):
+                    lines[i] = injectServiceStart(mainActivity,lines[i])
+                out+= injector.swapLine(lines[i]) + "\n"
 
         targetFile = open(fname,'w')
         targetFile.write(out)
         targetFile.close()
+
 
 if __name__ == "__main__":
     main()
