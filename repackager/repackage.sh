@@ -17,7 +17,7 @@ else
 
     #do stuff to modify the apk here
 
-    find $workDir/smali/com -regex '.*smali' -type f -exec python src/python/rewrite.py {} src/java/com/secure/ \;
+    find $workDir/smali/com -regex '.*smali' -type f -exec python src/python/rewrite.py {} ${workDir}/AndroidManifest.xml \;
     #copy in new .smali files
     cp -r src/java/* $workDir/smali
 
