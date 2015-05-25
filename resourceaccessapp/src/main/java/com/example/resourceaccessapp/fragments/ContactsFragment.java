@@ -36,12 +36,12 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onRefresh() {
         contactsAdapter.clear();
         ContentResolver cr = getActivity().getContentResolver();
-        Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI,
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
         if (cur.getCount() > 0){
             while (cur.moveToNext()) {
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY));
                 contactsAdapter.add(name);
             }
         }

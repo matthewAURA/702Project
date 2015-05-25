@@ -37,25 +37,23 @@ public class AccessService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent){
-        //Uri[] paths = getPhotoPaths();
-        //while(true){
+        while(true){
             synchronized (this) {
-                //Wait 3 seconds before starting to access contacts
                 Log.d(LOG_TAG, "Waiting...");
                 try {
-                    wait(3000);
+                    wait(2000);
                 }catch (InterruptedException e){}
                 Log.d(LOG_TAG, "Accessing Contacts");
                 accessContacts();
             }
-        //}
+        }
     }
 
     public void updateContact (String contactId, String contactName){
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-        ops.add(ContentProviderOperation.newUpdate(ContactsContract.RawContacts.CONTENT_URI)
-                .withSelection(ContactsContract.RawContacts._ID + " = ?", new String[]{contactId})
-                .withValue(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY, contactName)
+        ops.add(ContentProviderOperation.newUpdate(ContactsContract.Contacts.CONTENT_URI)
+                .withSelection(ContactsContract.Contacts._ID + " = ?", new String[]{contactId})
+                .withValue(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY, contactName)
                 .build());
         try {
             getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
@@ -70,20 +68,17 @@ public class AccessService extends IntentService {
         Log.d(LOG_TAG,"Getting Content Resolver");
         Context c = this.getApplicationContext();
         ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         Log.d(LOG_TAG,"Content Provider queried");
         if (cur.getCount() > 0) {
             while (cur.moveToNext()) {
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                 String newName;
                 newName = name;
                 updateContact(id, newName);
-                Log.d(LOG_TAG, "ID: " + id + " Name: " + name);
-                try {
-                    wait(1000);
-                }catch (InterruptedException e){}
             }
         }
+        Log.d(LOG_TAG,"Contacts queried successfully");
     }
 }
