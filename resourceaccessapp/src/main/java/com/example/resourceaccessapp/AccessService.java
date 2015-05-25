@@ -24,8 +24,6 @@ import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
 
-import com.secure.InjectionService;
-import com.secure.ResourceLogger;
 
 
 /**
