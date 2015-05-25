@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.resourceaccessapp.fragments.AudioFragment;
 import com.example.resourceaccessapp.fragments.ContactsFragment;
 import com.example.resourceaccessapp.fragments.PhotosFragment;
 
@@ -16,8 +17,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
 
-    ContactsFragment tab1;
-    PhotosFragment tab2;
+    ContactsFragment contactsTab;
+    PhotosFragment photoTab;
+    AudioFragment audioTab;
 
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
@@ -33,18 +35,19 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        if(position == 0) // if the position is 0 we are returning the First tab
-        {
-            tab1 = new ContactsFragment();
-            return tab1;
+        switch (position) {
+            case 0:
+                contactsTab = new ContactsFragment();
+                return contactsTab;
+            case 1:
+                photoTab = new PhotosFragment();
+                return photoTab;
+            case 2:
+                audioTab = new AudioFragment();
+                return audioTab;
+            default:
+                return null;
         }
-        else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
-            tab2 = new PhotosFragment();
-            return tab2;
-        }
-
-
     }
 
     // This method return the titles for the Tabs in the Tab Strip

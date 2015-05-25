@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Resource Access App</string>
     <string name="contacts_refresh_hint">Swipe down to reload contacts</string>
+    <string name="audio_refresh_hint">Swipe down to reload artists on this phone</string>
     <string name="action_settings">Settings</string>
 </resources>

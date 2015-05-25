@@ -2,10 +2,7 @@ package com.example.resourceaccessapp.fragments;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,9 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.resourceaccessapp.CustomListAdapter;
+import com.example.resourceaccessapp.adapters.ContactsListAdapter;
 import com.example.resourceaccessapp.R;
-import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.util.ArrayList;
 
@@ -25,7 +21,7 @@ import java.util.ArrayList;
  * Created by Simon on 25/05/2015.
  */
 public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
-    private CustomListAdapter contactsAdapter;
+    private ContactsListAdapter contactsAdapter;
     private SwipeRefreshLayout swipeLayout;
 
     private TextView refreshHint;
@@ -59,12 +55,12 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_contacts, container, false);
 
-        contactsAdapter = new CustomListAdapter(getActivity(), new ArrayList<String>());
+        contactsAdapter = new ContactsListAdapter(getActivity(), new ArrayList<String>());
 
         ListView listView = (ListView) v.findViewById(R.id.contact_list_view);
         listView.setAdapter(contactsAdapter);
 
-        swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_view);
+        swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.contacts_swipe_refresh_view);
         swipeLayout.setOnRefreshListener(this);
 
         refreshHint = (TextView) v.findViewById(R.id.contacts_swipe_down_hint);
