@@ -1,27 +1,21 @@
 package com.example.resourceaccessapp.fragments;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.resourceaccessapp.CustomListAdapter;
 import com.example.resourceaccessapp.R;
-import com.gc.materialdesign.views.ButtonRectangle;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 /**
  * Created by Simon on 25/05/2015.
@@ -41,7 +35,7 @@ public class PhotosFragment extends Fragment {
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_photos, container, false);
 
-        ButtonRectangle selectImageButton = (ButtonRectangle) v.findViewById(R.id.selectImageButton);
+        Button selectImageButton = (Button) v.findViewById(R.id.selectImageButton);
         this.targetImage = (ImageView) v.findViewById(R.id.imageView);
         this.targetImage.setVisibility(View.GONE);
 

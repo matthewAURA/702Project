@@ -1,4 +1,4 @@
-package com.example.resourceaccessapp;
+package com.example.resourceaccessapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,13 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.resourceaccessapp.R;
+
 import java.util.List;
 
 /**
  * Created by Simon on 12/01/2015.
  */
-public class CustomListAdapter extends ArrayAdapter<String> {
-    public CustomListAdapter(Context context, List<String> contacts) {
+public class ContactsListAdapter extends ArrayAdapter<String> {
+    public ContactsListAdapter(Context context, List<String> contacts) {
         super(context, 0, contacts);
     }
 

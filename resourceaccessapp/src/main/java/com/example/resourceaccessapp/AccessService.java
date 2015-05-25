@@ -37,19 +37,23 @@ public class AccessService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent){
-        //Uri[] paths = getPhotoPaths();
-        //while(true){
+        while(true){
             synchronized (this) {
+                Log.d(LOG_TAG, "Waiting...");
+                try {
+                    wait(2000);
+                }catch (InterruptedException e){}
+                Log.d(LOG_TAG, "Accessing Contacts");
                 accessContacts();
             }
-        //}
+        }
     }
 
     public void updateContact (String contactId, String contactName){
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-        ops.add(ContentProviderOperation.newUpdate(ContactsContract.RawContacts.CONTENT_URI)
-                .withSelection(ContactsContract.RawContacts._ID + " = ?", new String[]{contactId})
-                .withValue(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY, contactName)
+        ops.add(ContentProviderOperation.newUpdate(ContactsContract.Contacts.CONTENT_URI)
+                .withSelection(ContactsContract.Contacts._ID + " = ?", new String[]{contactId})
+                .withValue(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY, contactName)
                 .build());
         try {
             getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
@@ -63,90 +67,18 @@ public class AccessService extends IntentService {
     private void accessContacts(){
         Log.d(LOG_TAG,"Getting Content Resolver");
         Context c = this.getApplicationContext();
-
-
-
         ContentResolver cr = getContentResolver();
-
-
-        Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
-        if (cur.getCount() > 0 && false) {
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        Log.d(LOG_TAG,"Content Provider queried");
+        if (cur.getCount() > 0) {
             while (cur.moveToNext()) {
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                 String newName;
                 newName = name;
                 updateContact(id, newName);
-                Log.d(LOG_TAG, "ID: " + id + " Name: " + name);
-                try {
-                    wait(100);
-                }catch (InterruptedException e){}
             }
         }
-    }
-
-    private void accessImages(Uri[] paths){
-        int count = 1;
-        int numPhotos = paths.length;
-        for (Uri path: paths){
-            try {
-                Log.d(LOG_TAG, "Photo " + count + " / " + numPhotos + " : "
-                        + path.toString());
-
-                Bitmap bitmap = BitmapFactory.decodeFile(path.toString());
-                Matrix mat = new Matrix();
-                mat.postRotate(90);
-                Bitmap bMapRotate = Bitmap.createBitmap(bitmap, 0, 0,
-                        bitmap.getWidth(), bitmap.getHeight(), mat, true);
-
-                FileOutputStream out = null;
-                bitmap.recycle();
-                try {
-                    out = new FileOutputStream(path.toString());
-                    bMapRotate.compress(Bitmap.CompressFormat.PNG, 100, out);
-                    bMapRotate.recycle();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        if (out != null) {
-                            out.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            count++;
-        }
-    }
-    private Uri[] getPhotoPaths(){
-        Cursor cc = null;
-        Uri[] mUrls = null;
-        String[] strUrls = null;
-        String[] mNames = null;
-
-        cc = this.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, null, null,null);
-        if (cc != null) {
-            try {
-                cc.moveToFirst();
-                mUrls = new Uri[cc.getCount()];
-                strUrls = new String[cc.getCount()];
-                mNames = new String[cc.getCount()];
-                for (int i = 0; i < cc.getCount(); i++) {
-                    cc.moveToPosition(i);
-                    mUrls[i] = Uri.parse(cc.getString(1));
-                    strUrls[i] = cc.getString(1);
-                    mNames[i] = cc.getString(3);
-                    Log.d("mNames[i]",mNames[i]+":"+cc.getColumnCount()+ " : " +cc.getString(3));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return mUrls;
+        Log.d(LOG_TAG,"Contacts queried successfully");
     }
 }

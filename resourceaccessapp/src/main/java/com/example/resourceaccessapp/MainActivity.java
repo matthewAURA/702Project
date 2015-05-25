@@ -16,14 +16,12 @@ public class MainActivity extends ActionBarActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence titles[]={"Contacts", "Images"};
-    int numTabs = 2;
+    CharSequence titles[]={"Contacts", "Images","Audio"};
+    int numTabs = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         setContentView(R.layout.activity_main);
 
