@@ -25,7 +25,9 @@ public class ResourceLogger {
         }
         pendingIntents.add(new ComparableIntent(i));
 
-
+        if (context == null) {
+           return;
+        }
         Log.d("Secure", "Attempting to Send Broadcast");
         if (context != null) {
             while (pendingIntents.peek() != null) {
@@ -42,7 +44,7 @@ public class ResourceLogger {
 
     public static void logQuery(Uri uri){
         if (context == null) {
-            context = InjectionService.getServiceContext();
+            return;
         }
         Intent intent = new Intent(ResourceLogger.BROADCAST_URI);
         intent.putExtra("resource_accessed_name", "Contacts");

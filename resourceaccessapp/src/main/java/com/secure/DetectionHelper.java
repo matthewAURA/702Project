@@ -26,11 +26,6 @@ public class DetectionHelper implements SensorEventListener {
     private Sensor light;
     private float lightValue;
 
-    //proximity sensor variables
-//    private SensorManager proximityManager;
-//    private Sensor proximity;
-//    private String proximityValue;
-
     //screen display variable
     private PowerManager powerManager;
     private boolean screenInteractive;
@@ -50,11 +45,6 @@ public class DetectionHelper implements SensorEventListener {
         lightManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
         light = lightManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         lightManager.registerListener(this, light , SensorManager.SENSOR_DELAY_NORMAL);
-
-        //initializing the proximity variables
-//        proximityManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
-//        proximity = proximityManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-//        proximityManager.registerListener(this, proximity , SensorManager.SENSOR_DELAY_NORMAL);
 
         //initializing the power manager to check screen status
         powerManager = (PowerManager) context.getSystemService(context.POWER_SERVICE);
@@ -82,14 +72,11 @@ public class DetectionHelper implements SensorEventListener {
         lightManager.registerListener(this, light,
                 SensorManager.SENSOR_DELAY_NORMAL);
 
-//        proximityManager.registerListener(this, proximity,
-//                SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
         accelManager.unregisterListener(this);
         lightManager.unregisterListener(this);
-//        proximityManager.unregisterListener(this);
     }
 
     //this method determines which type of sensor event occurs and stores the values in respective sensor variables
@@ -124,16 +111,6 @@ public class DetectionHelper implements SensorEventListener {
         } else if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             lightValue = event.values[0];
         }
-//        } else if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-//
-//            float p = event.values[0];
-//
-//            if (p == 0.0) {
-//                proximityValue = "near";
-//            } else {
-//                proximityValue = "far";
-//            }
-//        }
     }
 
     @Override
