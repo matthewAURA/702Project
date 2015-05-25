@@ -5,20 +5,25 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by Nazish Khan on 16/04/2015.
+ * @Author: Nazish Khan
+ * @Since 16/04/2015
+ */
+
+/**
  * This class aims to make the database thread safe by implementing concurrency. To use the database with multiple threads we need to make sure we are using one database connection.
  */
 
 public class DatabaseManager {
 
-    //Counter indicates how many times database is opened
     private AtomicInteger counter = new AtomicInteger();
 
     private static DatabaseManager instance;
     private static SQLiteOpenHelper myDatabaseHandler;
     private SQLiteDatabase myDatabase;
 
-    //This method initializes an instance of the database in order to be used my the DatabaseHandler class.
+    /**This method initializes an instance of the database in order to be used my the DatabaseHandler class.
+     * @param helper
+     */
     public static synchronized void initializeInstance(SQLiteOpenHelper helper) {
         if (instance == null) {
             instance = new DatabaseManager();
@@ -26,7 +31,9 @@ public class DatabaseManager {
         }
     }
 
-    //This method returns an instance of the database in order open and close the database connection.
+    /**This method returns an instance of the database in order open and close the database connection.
+     * @return
+     */
     public static synchronized DatabaseManager getInstance() {
         if (instance == null) {
             throw new IllegalStateException(DatabaseManager.class.getSimpleName() +
@@ -35,7 +42,9 @@ public class DatabaseManager {
         return instance;
     }
 
-    // Opens a new database connection when counter reaches one
+    /**Opens a new database connection when counter reaches one
+     * @return
+     */
     public synchronized SQLiteDatabase openDatabase() {
         if(counter.incrementAndGet() == 1) {
             myDatabase = myDatabaseHandler.getWritableDatabase();
@@ -43,7 +52,8 @@ public class DatabaseManager {
         return myDatabase;
     }
 
-    // Closes existing database connection when counter reaches zero
+    /** Closes existing database connection when counter reaches zero
+     */
     public synchronized void closeDatabase() {
         if(counter.decrementAndGet() == 0) {
             myDatabase.close();
