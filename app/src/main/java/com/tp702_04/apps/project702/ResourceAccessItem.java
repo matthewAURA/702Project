@@ -3,7 +3,7 @@ package com.tp702_04.apps.project702;
 /**
  * Created by Nazish Khan on 10/04/2015.
  */
-public class LogItem {
+public class ResourceAccessItem {
 
     //private variables
     int _id;
@@ -12,26 +12,29 @@ public class LogItem {
     String _date;
     String _time;
     String _tag_message;
+    String _is_machine_access;
 
-    public LogItem(){
+    public ResourceAccessItem(){
         //empty constructor
     }
 
-    public LogItem(int _id, String _resource_accessed_name, String _app, String _date, String _time, String _tag_message){
+    public ResourceAccessItem(int _id, String _resource_accessed_name, String _app, String _date, String _time, String _tag_message, String _is_machine_access){
         this._id = _id;
         this._resource_accessed_name = _resource_accessed_name;
         this._app = _app;
         this._date = _date;
         this._time = _time;
         this._tag_message = _tag_message;
+        this._is_machine_access = _is_machine_access;
     }
 
-    public LogItem(String _resource_accessed_name, String _app, String _date, String _time, String _tag_message){
+    public ResourceAccessItem(String _resource_accessed_name, String _app, String _date, String _time, String _tag_message, String _is_machine_access){
         this._resource_accessed_name = _resource_accessed_name;
         this._app = _app;
         this._date = _date;
         this._time = _time;
         this._tag_message = _tag_message;
+        this._is_machine_access = _is_machine_access;
     }
 
     // getting ID
@@ -93,4 +96,10 @@ public class LogItem {
     public void setTagMessage(String _tag_message){
         this._tag_message= _tag_message;
     }
+
+    // getting isMachineAccess
+    public String getIsMachineAccess() { return _is_machine_access; }
+
+    // setting isMachineAccess
+    public void setIsMachineAccess(String _is_machine_access) { this._is_machine_access = _is_machine_access; }
 }

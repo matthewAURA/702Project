@@ -1,6 +1,7 @@
 package com.tp702_04.apps.project702;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,27 +13,27 @@ import java.util.ArrayList;
 /**
  * Created by jamesbutler on 16/04/15.
  */
-public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
+public class ResourceAccessListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private ArrayList<LogItem> logItems;
+    private ArrayList<ResourceAccessItem> resourceAccessItems;
 
-    public ExpandableLogListAdapter(Context newContext) {
+    public ResourceAccessListAdapter(Context newContext) {
         this.context = newContext;
-        this.logItems = new ArrayList<>();
+        this.resourceAccessItems = new ArrayList<>();
     }
 
-    public void addAll(ArrayList<LogItem> newLogItems) {
-        this.logItems.addAll(newLogItems);
+    public void addAll(ArrayList<ResourceAccessItem> newResourceAccessItems) {
+        this.resourceAccessItems.addAll(newResourceAccessItems);
     }
 
     public void clear() {
-        this.logItems.clear();
+        this.resourceAccessItems.clear();
     }
 
     @Override
     public int getGroupCount() {
-        return logItems.size();
+        return resourceAccessItems.size();
     }
 
     @Override
@@ -43,15 +44,15 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int groupPosition) {
-        return logItems.get(groupPosition);
+        return resourceAccessItems.get(groupPosition);
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) { return logItems.get(groupPosition); }
+    public Object getChild(int groupPosition, int childPosition) { return resourceAccessItems.get(groupPosition); }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return logItems.get(groupPosition).getID();
+        return resourceAccessItems.get(groupPosition).getID();
     }
 
     @Override
@@ -66,7 +67,7 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        LogItem logItem = logItems.get(groupPosition);
+        ResourceAccessItem resourceAccessItem = resourceAccessItems.get(groupPosition);
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -74,14 +75,18 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textView = (TextView) convertView.findViewById(R.id.list_group_header);
-        textView.setText(logItem.getApp());
+        textView.setText(resourceAccessItem.getApp());
+
+        if (resourceAccessItem.getIsMachineAccess() == "true") {
+            textView.setBackgroundColor(Color.RED);
+        }
 
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        LogItem logItem = logItems.get(groupPosition);
+        ResourceAccessItem resourceAccessItem = resourceAccessItems.get(groupPosition);
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -89,16 +94,23 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textViewName = (TextView) convertView.findViewById(R.id.list_child_1);
-        textViewName.setText(logItem.getName());
+        textViewName.setText(resourceAccessItem.getName());
 
         TextView textViewDate = (TextView) convertView.findViewById(R.id.list_child_2);
-        textViewDate.setText(logItem.getDate());
+        textViewDate.setText(resourceAccessItem.getDate());
 
         TextView textViewTime = (TextView) convertView.findViewById(R.id.list_child_3);
-        textViewTime.setText(logItem.getTime());
+        textViewTime.setText(resourceAccessItem.getTime());
 
         TextView textViewTagMessage = (TextView) convertView.findViewById(R.id.list_child_4);
-        textViewTagMessage.setText(logItem.getTagMessage());
+        textViewTagMessage.setText(resourceAccessItem.getTagMessage());
+
+        if (resourceAccessItem.getIsMachineAccess() == "true") {
+            textViewName.setBackgroundColor(Color.parseColor("#FF9999"));
+            textViewDate.setBackgroundColor(Color.parseColor("#FF9999"));
+            textViewTime.setBackgroundColor(Color.parseColor("#FF9999"));
+            textViewTagMessage.setBackgroundColor(Color.parseColor("#FF9999"));
+        }
 
         return convertView;
     }

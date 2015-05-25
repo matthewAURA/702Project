@@ -4,8 +4,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-//import android.util.Log;
-
 /**
  * Created by Nazish Khan on 16/04/2015.
  */

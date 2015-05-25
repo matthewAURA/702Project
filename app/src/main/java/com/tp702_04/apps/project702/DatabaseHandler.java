@@ -23,10 +23,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "logItemsManager";
+    private static final String DATABASE_NAME = "resourceAccessItemsManager";
 
     // LogItems table name
-    private static final String TABLE_LOG_ITEMS = "log_items";
+    private static final String TABLE_RESOURCE_ACCESS_ITEMS = "resource_access_items";
 
     // LogItems Table Columns names
     private static final String KEY_ID = "id";
@@ -35,6 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_DATE = "date";
     private static final String KEY_TIME = "time";
     private static final String KEY_TAG_MESSAGE = "tag_message";
+    private static final String KEY_IS_MACHINE_ACCESS = "is_machine_access";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,9 +45,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_LOG_ITEMS_TABLE = "CREATE TABLE " + TABLE_LOG_ITEMS + "("
+        String CREATE_LOG_ITEMS_TABLE = "CREATE TABLE " + TABLE_RESOURCE_ACCESS_ITEMS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_APP + " TEXT,"
-                + KEY_DATE + " TEXT," + KEY_TIME + " TEXT," + KEY_TAG_MESSAGE + " TEXT" + ")";
+                + KEY_DATE + " TEXT," + KEY_TIME + " TEXT," + KEY_TAG_MESSAGE + " TEXT,"
+                + KEY_IS_MACHINE_ACCESS + "TEXT)";
         db.execSQL(CREATE_LOG_ITEMS_TABLE);
     }
 
@@ -54,7 +56,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOG_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RESOURCE_ACCESS_ITEMS);
 
         // Create tables again
         onCreate(db);
@@ -64,48 +66,61 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      * All CRUD(Create, Read, Delete) Operations
      */
 
-    // Adding new log item. This method accepts Contact object as parameter. We need to build ContentValues parameters using LogItem object. Once we inserted data in database we need to close the database connection.
-    public void addLogItem(LogItem logitem) {
+    // Adding new resource access item. This method accepts Contact object as parameter. We need to
+    // build ContentValues parameters using ResourceAccessItem object. Once we inserted data in
+    // database we need to close the database connection.
+    public void addResourceAccessItem(ResourceAccessItem resourceAccessItem) {
 
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, logitem.getName()); // Log Item Resource Accessed Name
-        values.put(KEY_APP, logitem.getApp()); // Log Item App Name
-        values.put(KEY_DATE, logitem.getDate()); // Log Item Date
-        values.put(KEY_TIME, logitem.getTime()); // Log Item Time
-        values.put(KEY_TAG_MESSAGE, logitem.getTagMessage()); // Log Item Tag Message
+        values.put(KEY_NAME, resourceAccessItem.getName());
+        values.put(KEY_APP, resourceAccessItem.getApp());
+        values.put(KEY_DATE, resourceAccessItem.getDate());
+        values.put(KEY_TIME, resourceAccessItem.getTime());
+        values.put(KEY_TAG_MESSAGE, resourceAccessItem.getTagMessage());
+        values.put(KEY_IS_MACHINE_ACCESS, resourceAccessItem.getIsMachineAccess());
 
         // Inserting Row
-        db.insert(TABLE_LOG_ITEMS, null, values);
+        db.insert(TABLE_RESOURCE_ACCESS_ITEMS, null, values);
         DatabaseManager.getInstance().closeDatabase();
     }
 
-    // Getting single log item. It accepts id as parameter and will return the matched row from the database.
-    public LogItem getLogItem(int id) {
+    // Getting single resource access item. It accepts id as parameter and will return the matched row from the database.
+    public ResourceAccessItem getResourceAccessItem(int id) {
 
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        Cursor cursor = db.query(TABLE_LOG_ITEMS, new String[] { KEY_ID,
+        Cursor cursor = db.query(TABLE_RESOURCE_ACCESS_ITEMS, new String[] { KEY_ID,
                         KEY_NAME, KEY_APP, KEY_DATE, KEY_TIME, KEY_TAG_MESSAGE }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        LogItem logitem = new LogItem(cursor.getInt(0),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
-        // return log item
+        ResourceAccessItem resourceAccessItem = new ResourceAccessItem(
+                cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6));
+
+        // return resource access item
         DatabaseManager.getInstance().closeDatabase();
-        return logitem;
+        return resourceAccessItem;
     }
 
-    // Getting All Log Items. This method will return all log items from database in array list format of LogItem class type. You need to write a for loop to go through each contact.
-    public List<LogItem> getAllLogItems() {
+    // Getting all resource access Items. This method will return all resource access items from
+    // database in array list format of ResourceAccessItem class type. You need to write a for
+    // loop to go through each contact.
+    public List<ResourceAccessItem> getAllResourceAccessItems() {
 
-        List<LogItem> logItemList = new ArrayList<LogItem>();
+        List<ResourceAccessItem> resourceAccessItemList = new ArrayList<ResourceAccessItem>();
+
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_LOG_ITEMS;
+        String selectQuery = "SELECT  * FROM " + TABLE_RESOURCE_ACCESS_ITEMS;
 
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
@@ -114,27 +129,28 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                LogItem logitem = new LogItem();
-                logitem.setID(cursor.getInt(0));
-                logitem.setName(cursor.getString(1));
-                logitem.setApp(cursor.getString(2));
-                logitem.setDate(cursor.getString(3));
-                logitem.setTime(cursor.getString(4));
-                logitem.setTagMessage(cursor.getString(5));
-                // Adding log item to list
-                logItemList.add(logitem);
+                ResourceAccessItem resourceAccessItem = new ResourceAccessItem();
+                resourceAccessItem.setID(cursor.getInt(0));
+                resourceAccessItem.setName(cursor.getString(1));
+                resourceAccessItem.setApp(cursor.getString(2));
+                resourceAccessItem.setDate(cursor.getString(3));
+                resourceAccessItem.setTime(cursor.getString(4));
+                resourceAccessItem.setTagMessage(cursor.getString(5));
+                resourceAccessItem.setIsMachineAccess(cursor.getString(6));
+                resourceAccessItemList.add(resourceAccessItem);
             } while (cursor.moveToNext());
         }
 
-        // return log item list
+        // return resource access item list
         DatabaseManager.getInstance().closeDatabase();
-        return logItemList;
+        return resourceAccessItemList;
     }
 
-    // Getting log items Count. This method will return total number of log items in SQLite database.
-    public int getLogItemsCount() {
+    // Getting resource access items Count. This method will return total number of resource access
+    // items in SQLite database.
+    public int getResourceAccessItemsCount() {
 
-        String countQuery = "SELECT  * FROM " + TABLE_LOG_ITEMS;
+        String countQuery = "SELECT  * FROM " + TABLE_RESOURCE_ACCESS_ITEMS;
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -146,12 +162,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return count;
     }
 
-    // Deleting all log items
-    public void deleteLogItem(LogItem logitem) {
-
+    // Deleting all resource access items
+    public void deleteAllResourceAccessItems() {
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        db.delete(TABLE_LOG_ITEMS, null, null);
+        db.delete(TABLE_RESOURCE_ACCESS_ITEMS, null, null);
         DatabaseManager.getInstance().closeDatabase();
     }
 }
