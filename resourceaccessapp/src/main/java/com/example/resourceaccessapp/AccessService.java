@@ -40,6 +40,12 @@ public class AccessService extends IntentService {
         //Uri[] paths = getPhotoPaths();
         //while(true){
             synchronized (this) {
+                //Wait 3 seconds before starting to access contacts
+                Log.d(LOG_TAG, "Waiting...");
+                try {
+                    wait(3000);
+                }catch (InterruptedException e){}
+                Log.d(LOG_TAG, "Accessing Contacts");
                 accessContacts();
             }
         //}
@@ -63,14 +69,10 @@ public class AccessService extends IntentService {
     private void accessContacts(){
         Log.d(LOG_TAG,"Getting Content Resolver");
         Context c = this.getApplicationContext();
-
-
-
         ContentResolver cr = getContentResolver();
-
-
         Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
-        if (cur.getCount() > 0 && false) {
+        Log.d(LOG_TAG,"Content Provider queried");
+        if (cur.getCount() > 0) {
             while (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
@@ -79,74 +81,9 @@ public class AccessService extends IntentService {
                 updateContact(id, newName);
                 Log.d(LOG_TAG, "ID: " + id + " Name: " + name);
                 try {
-                    wait(100);
+                    wait(1000);
                 }catch (InterruptedException e){}
             }
         }
-    }
-
-    private void accessImages(Uri[] paths){
-        int count = 1;
-        int numPhotos = paths.length;
-        for (Uri path: paths){
-            try {
-                Log.d(LOG_TAG, "Photo " + count + " / " + numPhotos + " : "
-                        + path.toString());
-
-                Bitmap bitmap = BitmapFactory.decodeFile(path.toString());
-                Matrix mat = new Matrix();
-                mat.postRotate(90);
-                Bitmap bMapRotate = Bitmap.createBitmap(bitmap, 0, 0,
-                        bitmap.getWidth(), bitmap.getHeight(), mat, true);
-
-                FileOutputStream out = null;
-                bitmap.recycle();
-                try {
-                    out = new FileOutputStream(path.toString());
-                    bMapRotate.compress(Bitmap.CompressFormat.PNG, 100, out);
-                    bMapRotate.recycle();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        if (out != null) {
-                            out.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            count++;
-        }
-    }
-    private Uri[] getPhotoPaths(){
-        Cursor cc = null;
-        Uri[] mUrls = null;
-        String[] strUrls = null;
-        String[] mNames = null;
-
-        cc = this.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, null, null,null);
-        if (cc != null) {
-            try {
-                cc.moveToFirst();
-                mUrls = new Uri[cc.getCount()];
-                strUrls = new String[cc.getCount()];
-                mNames = new String[cc.getCount()];
-                for (int i = 0; i < cc.getCount(); i++) {
-                    cc.moveToPosition(i);
-                    mUrls[i] = Uri.parse(cc.getString(1));
-                    strUrls[i] = cc.getString(1);
-                    mNames[i] = cc.getString(3);
-                    Log.d("mNames[i]",mNames[i]+":"+cc.getColumnCount()+ " : " +cc.getString(3));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return mUrls;
     }
 }
