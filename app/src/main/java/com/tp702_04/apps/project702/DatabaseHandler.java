@@ -2,21 +2,19 @@ package com.tp702_04.apps.project702;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Nazish Khan on 10/04/2015.
+ * This class is responsible for creating the database. It uses instances of the DatabaseManager class to effectively manage the database.
  */
 public class DatabaseHandler extends SQLiteOpenHelper{
 
-    // All Static variables
-
+    // Static variables
     private final Context myContext;
 
     // Database Version
@@ -36,12 +34,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_TIME = "time";
     private static final String KEY_TAG_MESSAGE = "tag_message";
 
+    //
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.myContext = context;
     }
 
-    // Creating Tables
+    // Creating Log Items Table
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_LOG_ITEMS_TABLE = "CREATE TABLE " + TABLE_LOG_ITEMS + "("
@@ -50,26 +49,27 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_LOG_ITEMS_TABLE);
     }
 
-    // Upgrading database
+    // Upgrading an old database to a newer version
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOG_ITEMS);
 
-        // Create tables again
+        // Create table again
         onCreate(db);
     }
 
     /**
-     * All CRUD(Create, Read, Delete) Operations
+     * Create, Read, Delete Operations for the database
      */
 
-    // Adding new log item. This method accepts Contact object as parameter. We need to build ContentValues parameters using LogItem object. Once we inserted data in database we need to close the database connection.
+    // Adding a new log item. This method accepts logitem object as parameter. We need to build ContentValues parameters using LogItem object. Once we inserted data in database we need to close the database connection.
     public void addLogItem(LogItem logitem) {
 
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
 
+        // Creates a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, logitem.getName()); // Log Item Resource Accessed Name
         values.put(KEY_APP, logitem.getApp()); // Log Item App Name
@@ -95,7 +95,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         LogItem logitem = new LogItem(cursor.getInt(0),
                 cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
-        // return log item
+
         DatabaseManager.getInstance().closeDatabase();
         return logitem;
     }
@@ -126,7 +126,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
 
-        // return log item list
         DatabaseManager.getInstance().closeDatabase();
         return logItemList;
     }
@@ -141,7 +140,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         int count=cursor.getCount();
         cursor.close();
 
-        // return count
         DatabaseManager.getInstance().closeDatabase();
         return count;
     }

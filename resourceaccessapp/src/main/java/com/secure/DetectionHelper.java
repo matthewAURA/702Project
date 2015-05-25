@@ -13,21 +13,32 @@ import android.os.PowerManager;
  */
 public class DetectionHelper implements SensorEventListener {
 
-    //accelerometer variables
+    //accelerometer sensor variables
     private SensorManager accelManager;
     private Sensor accelerometer;
     private final float NOISE = (float) 0.25;
     private float mLastX, mLastY, mLastZ;
     private boolean mInitialized;
+    private float accelX, accelY, accelZ;
 
+    //light sensor variables
     private SensorManager lightManager;
     private Sensor light;
+    private float lightValue;
 
-    private SensorManager proximityManager;
-    private Sensor proximity;
+    //proximity sensor variables
+//    private SensorManager proximityManager;
+//    private Sensor proximity;
+//    private String proximityValue;
+
+    //screen display variable
     private PowerManager powerManager;
+    private boolean screenInteractive;
 
     public DetectionHelper(Context context) {
+
+        lightValue = 0;
+//        proximityValue = "";
 
         //initializing the accelerometer variables
         mInitialized = false;
@@ -41,25 +52,24 @@ public class DetectionHelper implements SensorEventListener {
         lightManager.registerListener(this, light , SensorManager.SENSOR_DELAY_NORMAL);
 
         //initializing the proximity variables
-        proximityManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
-        proximity = proximityManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        proximityManager.registerListener(this, proximity , SensorManager.SENSOR_DELAY_NORMAL);
+//        proximityManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
+//        proximity = proximityManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+//        proximityManager.registerListener(this, proximity , SensorManager.SENSOR_DELAY_NORMAL);
 
         //initializing the power manager to check screen status
         powerManager = (PowerManager) context.getSystemService(context.POWER_SERVICE);
         isScreenDisplayOn();
     }
 
-    //display method to tell us if the device is interactive or not
+    //display method to tell us if the device is interactive or not and checks for the current API version being 20 or above. As the previous method isScreenOn() was deprecated in API versions < 20.
     public void isScreenDisplayOn() {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            Boolean interactive;
             if (powerManager.isInteractive() == true) {
-                interactive = true;
+                screenInteractive = true;
 
             } else {
-                interactive = false;
+                screenInteractive = false;
             }
         }
     }
@@ -72,16 +82,17 @@ public class DetectionHelper implements SensorEventListener {
         lightManager.registerListener(this, light,
                 SensorManager.SENSOR_DELAY_NORMAL);
 
-        proximityManager.registerListener(this, proximity,
-                SensorManager.SENSOR_DELAY_NORMAL);
+//        proximityManager.registerListener(this, proximity,
+//                SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
         accelManager.unregisterListener(this);
         lightManager.unregisterListener(this);
-        proximityManager.unregisterListener(this);
+//        proximityManager.unregisterListener(this);
     }
 
+    //this method determines which type of sensor event occurs and stores the values in respective sensor variables
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -104,24 +115,47 @@ public class DetectionHelper implements SensorEventListener {
                 mLastX = x;
                 mLastY = y;
                 mLastZ = z;
+
+                accelX = deltaX;
+                accelY = deltaY;
+                accelZ = deltaZ;
             }
+
         } else if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
-            float lightvalue = event.values[0];
-        } else if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            String proximityValue = "";
-            float p = event.values[0];
-
-            if (p == 0.0) {
-                proximityValue = "near";
-            } else {
-                proximityValue = "far";
-            }
+            lightValue = event.values[0];
         }
-
+//        } else if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+//
+//            float p = event.values[0];
+//
+//            if (p == 0.0) {
+//                proximityValue = "near";
+//            } else {
+//                proximityValue = "far";
+//            }
+//        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // required method for accelerometer. Has to exist but can be ignored it terms of its contents.
+        // required method for sensors. Has to exist but can be ignored it terms of its contents.
+    }
+
+    //this method checks for different conditions to be true in order to flag an access as machine access
+    public boolean isMachineAccess(){
+
+        boolean machineAccess;
+
+        if(screenInteractive == false) { //screen is switched off
+            machineAccess = true;
+        }else if (accelX == 0 && accelY == 0 && accelZ ==0) { //phone is completely still
+            machineAccess = true;
+        }else if (lightValue == 0){ //phone is in complete darkness
+            machineAccess = true;
+        }else{
+            machineAccess = false;
+        }
+
+        return machineAccess;
     }
 }

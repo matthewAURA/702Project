@@ -61,7 +61,10 @@ public class ResourceLogger {
         intent.putExtra("tag_message", uri.toString());
 
         DetectionHelper detectionHelper = new DetectionHelper(context);
+        intent.putExtra("is_machine_access", detectionHelper.isMachineAccess()? "true" : "false");
 
         sendMessage(intent);
     }
+
+
 }
