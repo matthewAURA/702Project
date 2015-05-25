@@ -1,33 +1,14 @@
 package com.example.resourceaccessapp;
 
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.resourceaccessapp.tabs.SlidingTabLayout;
 import com.example.resourceaccessapp.tabs.ViewPagerAdapter;
-import com.secure.ResourceLogger;
-import com.gc.materialdesign.views.ButtonRectangle;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -41,6 +22,9 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
 
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),titles,numTabs);

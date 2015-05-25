@@ -24,12 +24,22 @@ public class ResourceLogger {
             pendingIntents = new PriorityQueue<ComparableIntent>();
         }
         pendingIntents.add(new ComparableIntent(i));
-        context = InjectionService.getServiceContext();
+
+        if (context == null) {
+           return;
+        }
         Log.d("Secure", "Attempting to Send Broadcast");
         if (context != null) {
+
+
             while (pendingIntents.peek() != null) {
                 Log.d("Secure", "Sending Broadcast");
-                context.sendBroadcast(pendingIntents.poll().getIntent());
+                Intent intent = pendingIntents.poll().getIntent();
+                if (intent.getStringExtra("app_name").equals("null")){
+                    intent.removeExtra("app_name");
+                    intent.putExtra("app_name",context.getPackageName());
+                }
+                context.sendBroadcast(intent);
             }
         }
     }
@@ -37,7 +47,11 @@ public class ResourceLogger {
     public static void logQuery(Uri uri){
         Intent intent = new Intent(ResourceLogger.BROADCAST_URI);
         intent.putExtra("resource_accessed_name", "Contacts");
-        intent.putExtra("app_name", "App Name");
+        if (context == null) {
+            intent.putExtra("app_name", "");
+        }else{
+            intent.putExtra("app_name", context.getPackageName());
+        }
         Date date = new Date();
         date.setTime(System.currentTimeMillis());
 
