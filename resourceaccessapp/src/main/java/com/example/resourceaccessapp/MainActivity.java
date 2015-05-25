@@ -36,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence titles[]={"Contacts", "Images"};
+    int numTabs = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
