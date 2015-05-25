@@ -10,28 +10,22 @@ then
 else
 
     #unpack the apk using apktool
-
     java -jar $apkTool d -f ${origApk}
 
     workDir=`pwd`/${origApk%%.apk}
 
     #do stuff to modify the apk here
 
+    #inject method calls to each class in the application
     find $workDir/smali/com -regex '.*smali' -type f -exec python src/python/rewrite.py {} ${workDir}/AndroidManifest.xml \;
+
     #copy in new .smali files
     cp -r src/java/* $workDir/smali
 
-    #Modify Android Manifest
-    rm ${workDir}/original/AndroidManifest.xml
-    python src/python/manifest.py ${workDir}/AndroidManifest.xml
 
     #repackage
     modifiedApk="${workDir}-modified.apk"
     java -jar $apkTool b -c ${workDir} -o ${modifiedApk}
-
-    ##aapt
-    #./aurasium/dependencies/aapt/aapt package -m -J ${workDir}
-
 
 
     #re sign

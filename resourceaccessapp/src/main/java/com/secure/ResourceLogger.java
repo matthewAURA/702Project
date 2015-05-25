@@ -26,7 +26,7 @@ public class ResourceLogger {
         pendingIntents.add(new ComparableIntent(i));
 
         if (context == null) {
-            context = InjectionService.getServiceContext();
+           return;
         }
         Log.d("Secure", "Attempting to Send Broadcast");
         if (context != null) {
