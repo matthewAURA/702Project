@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.resourceaccessapp.tabs.SlidingTabLayout;
+import com.example.resourceaccessapp.tabs.ViewPagerAdapter;
 import com.secure.ResourceLogger;
 import com.gc.materialdesign.views.ButtonRectangle;
 
@@ -29,78 +32,35 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
-    static final int PICK_PHOTO_REQUEST = 1;
-    private CustomListAdapter contactsAdapter;
-    private ImageView targetImage;
+    ViewPager pager;
+    ViewPagerAdapter adapter;
+    SlidingTabLayout tabs;
+    CharSequence titles[]={"Contacts", "Images"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),titles,numTabs);
 
-        //Test
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        //setSupportActionBar(toolbar);
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
 
-        ButtonRectangle selectImageButton = (ButtonRectangle) findViewById(R.id.selectImageButton);
-        this.targetImage = (ImageView) findViewById(R.id.imageView);
-        this.targetImage.setVisibility(View.GONE);
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true);
 
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, PICK_PHOTO_REQUEST);
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.TabsScrollColor);
             }
         });
 
-        ButtonRectangle loadContactsButton = (ButtonRectangle) findViewById(R.id.loadContactsButton);
-
-        loadContactsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contactsAdapter.clear();
-                ContentResolver cr = getContentResolver();
-                Cursor cur = cr.query(ContactsContract.RawContacts.CONTENT_URI,
-                        null, null, null, null);
-                if (cur.getCount() > 0) {
-                    while (cur.moveToNext()) {
-                        String id = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts._ID));
-                        String name = cur.getString(cur.getColumnIndex(ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY));
-                        contactsAdapter.add(name);
-                    }
-                }
-            }
-        });
-
-        contactsAdapter = new CustomListAdapter(this, new ArrayList<String>());
-
-        ListView v = (ListView) findViewById(R.id.contact_list_view);
-        v.setAdapter(contactsAdapter);
+        tabs.setViewPager(pager);
 
         Intent badService = new Intent(this, AccessService.class);
         startService(badService);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_PHOTO_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Uri targetUri = data.getData();
-                Toast.makeText(this, "" + targetUri, Toast.LENGTH_LONG).show();
-                Bitmap bitmap;
-                try {
-                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                    targetImage.setImageBitmap(bitmap);
-                    this.targetImage.setVisibility(View.VISIBLE);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     @Override
