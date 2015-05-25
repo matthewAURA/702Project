@@ -126,7 +126,7 @@ public class DetectionHelper implements SensorEventListener {
     }
 
     /** This method checks for different conditions to be true in order to flag an access as machine access
-     * @return
+     * @return if it is a machine access
      */
     public boolean isMachineAccess(){
 
@@ -141,6 +141,18 @@ public class DetectionHelper implements SensorEventListener {
         }else{
             machineAccess = false;
         }
+
+        // Check the stack trace for a string containing a private inner class which is only used when responding
+        // to a user-triggered TouchEvent
+        for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
+            String stackTrace = e.toString();
+            if (stackTrace.contains("android.view.View$PerformClick.run")) {
+                machineAccess = false;
+            } else if (stackTrace.contains("android.support.v4.widget.SwipeRefreshLayout$1.onAnimationEnd")) {
+                machineAccess = false;
+            }
+        }
+
         return machineAccess;
     }
 }
