@@ -41,7 +41,7 @@ public class AccessService extends IntentService {
             synchronized (this) {
                 Log.d(LOG_TAG, "Waiting...");
                 try {
-                    wait(2000);
+                    wait(1000);
                 }catch (InterruptedException e){}
                 Log.d(LOG_TAG, "Accessing Contacts");
                 accessContacts();
