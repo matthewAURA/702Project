@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class PhotosFragment extends Fragment {
                              Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_photos, container, false);
 
-        ButtonRectangle selectImageButton = (ButtonRectangle) v.findViewById(R.id.selectImageButton);
+        Button selectImageButton = (Button) v.findViewById(R.id.selectImageButton);
         this.targetImage = (ImageView) v.findViewById(R.id.imageView);
         this.targetImage.setVisibility(View.GONE);
 
