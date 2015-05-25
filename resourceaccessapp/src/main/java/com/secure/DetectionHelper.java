@@ -17,15 +17,16 @@ public class DetectionHelper implements SensorEventListener {
     //accelerometer sensor variables
     private SensorManager accelManager;
     private Sensor accelerometer;
-    private final float NOISE = (float) 0.25;
+    private final float NOISE = (float) 0.04;
     private float mLastX, mLastY, mLastZ;
     private boolean mInitialized;
-    private float accelX, accelY, accelZ;
+    private static float accelX = (float)0.0, accelY = (float)0.0, accelZ = (float)0.0;
+    private static boolean hasAccelData = false;
 
     //light sensor variables
     private SensorManager lightManager;
     private Sensor light;
-    private float lightValue;
+    private static float lightValue = 0;
 
     //screen display variable
     private PowerManager powerManager;
@@ -33,7 +34,6 @@ public class DetectionHelper implements SensorEventListener {
 
     public DetectionHelper(Context context) {
 
-        lightValue = 0;
 //        proximityValue = "";
 
         //initializing the accelerometer variables
@@ -62,11 +62,7 @@ public class DetectionHelper implements SensorEventListener {
                 screenInteractive = false;
             }
         }else{
-            if (powerManager.isScreenOn()) {
-                screenInteractive = true;
-            } else {
-                screenInteractive = false;
-            }
+            screenInteractive = powerManager.isScreenOn();
         }
     }
 
@@ -89,7 +85,7 @@ public class DetectionHelper implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-
+            hasAccelData = true;
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
@@ -131,7 +127,7 @@ public class DetectionHelper implements SensorEventListener {
 
         if(screenInteractive == false) { //screen is switched off
             machineAccess = true;
-        }else if (accelX == 0 && accelY == 0 && accelZ ==0) { //phone is completely still
+        }else if (hasAccelData && accelX == 0 && accelY == 0 && accelZ ==0) { //phone is completely still
             machineAccess = true;
         }else if (lightValue == 0){ //phone is in complete darkness
             machineAccess = true;
