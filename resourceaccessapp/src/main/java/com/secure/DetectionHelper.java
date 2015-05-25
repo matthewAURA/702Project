@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.PowerManager;
+import android.util.Log;
 
 /**
  * Created by jamesbutler on 25/05/15.
@@ -55,9 +56,14 @@ public class DetectionHelper implements SensorEventListener {
     public void isScreenDisplayOn() {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            if (powerManager.isInteractive() == true) {
+            if (powerManager.isInteractive()) {
                 screenInteractive = true;
-
+            } else {
+                screenInteractive = false;
+            }
+        }else{
+            if (powerManager.isScreenOn()) {
+                screenInteractive = true;
             } else {
                 screenInteractive = false;
             }
@@ -132,7 +138,6 @@ public class DetectionHelper implements SensorEventListener {
         }else{
             machineAccess = false;
         }
-
         return machineAccess;
     }
 }
