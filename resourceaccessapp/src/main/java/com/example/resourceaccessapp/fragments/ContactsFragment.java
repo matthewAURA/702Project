@@ -2,11 +2,15 @@ package com.example.resourceaccessapp.fragments;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -38,6 +42,26 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
         ContentResolver cr = getActivity().getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
+
+
+        /*
+        Log.d("702 TEST", "===================");
+        boolean userAcess1 = false;
+        boolean userAcess2 = false;
+        for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
+            if (e.toString().contains("android.view.View$PerformClick.run")) {
+                userAcess1 = true;
+            }
+            if (e.toString().contains("dalvik.system.NativeStart.main")) {
+                userAcess2 = true;
+            }
+            Log.d("702 TEST", e.toString());
+        }
+        String msg = userAcess1 && userAcess2 ? "Human Access" : "Machine Acesss";
+        Log.d("702 TEST", msg);
+        Log.d("702 TEST", "===================");*/
+
+
         if (cur.getCount() > 0){
             while (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
@@ -45,7 +69,6 @@ public class ContactsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 contactsAdapter.add(name);
             }
         }
-
         refreshHint.setVisibility(View.GONE);
         swipeLayout.setRefreshing(false);
     }
