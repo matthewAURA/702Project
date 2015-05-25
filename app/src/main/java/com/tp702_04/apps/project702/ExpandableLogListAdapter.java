@@ -1,6 +1,7 @@
 package com.tp702_04.apps.project702;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,9 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
         TextView textViewTagMessage = (TextView) convertView.findViewById(R.id.list_child_4);
         textViewTagMessage.setText(logItem.getTagMessage());
+
+        TextView textViewIsMachineAccess = (TextView) convertView.findViewById(R.id.list_child_5);
+        textViewIsMachineAccess.setText(logItem.getIsMachineAccess());
 
         return convertView;
     }

@@ -12,26 +12,29 @@ public class LogItem {
     String _date;
     String _time;
     String _tag_message;
+    String _is_machine_access;
 
     public LogItem(){
         //empty constructor
     }
 
-    public LogItem(int _id, String _resource_accessed_name, String _app, String _date, String _time, String _tag_message){
+    public LogItem(int _id, String _resource_accessed_name, String _app, String _date, String _time, String _tag_message, String _is_machine_access){
         this._id = _id;
         this._resource_accessed_name = _resource_accessed_name;
         this._app = _app;
         this._date = _date;
         this._time = _time;
         this._tag_message = _tag_message;
+        this._is_machine_access = _is_machine_access;
     }
 
-    public LogItem(String _resource_accessed_name, String _app, String _date, String _time, String _tag_message){
+    public LogItem(String _resource_accessed_name, String _app, String _date, String _time, String _tag_message, String _is_machine_access){
         this._resource_accessed_name = _resource_accessed_name;
         this._app = _app;
         this._date = _date;
         this._time = _time;
         this._tag_message = _tag_message;
+        this._is_machine_access = _is_machine_access;
     }
 
     // getting ID
@@ -93,4 +96,8 @@ public class LogItem {
     public void setTagMessage(String _tag_message){
         this._tag_message= _tag_message;
     }
+
+    public String getIsMachineAccess() {return this._is_machine_access; }
+
+    public void setIsMachineAccess(String _is_machine_access) { this._is_machine_access = _is_machine_access;}
 }
