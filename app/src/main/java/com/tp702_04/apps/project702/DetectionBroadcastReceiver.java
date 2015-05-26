@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by jamesbutler on 23/05/15.
+ * @author jamesbutler
  */
 public class DetectionBroadcastReceiver extends BroadcastReceiver {
     @Override

@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 
         databaseHandler = new DatabaseHandler(this);
 
-        // Trigger
+        // Trigger the swipe to refresh task
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -88,12 +88,10 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
+            // Handle the Clear All menu option
             case R.id.clear_all:
                 databaseHandler.deleteAllLogItems();
                 expandableLogListAdapter.clear();

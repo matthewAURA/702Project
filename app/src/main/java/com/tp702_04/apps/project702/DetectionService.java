@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created by jamesbutler on 10/04/15.
+ * @author jamesbutler
  */
 public class DetectionService extends IntentService {
 
