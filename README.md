@@ -10,7 +10,9 @@ This project monitors Android applications by modifing their bytecode and loggin
 1) git clone https://github.com/matthewAURA/702Project
 2) cd repackager
 3) make
-4) ./repackage.sh <your_application.apk>
+4) ./repackage.sh <your_application.apk> 
+
+The apk must be in the repackager directory because Matt is bad at BASH
 ```
 
 This will change the signature of your APK!
