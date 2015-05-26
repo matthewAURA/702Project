@@ -18,7 +18,8 @@ import com.example.resourceaccessapp.R;
 import java.io.FileNotFoundException;
 
 /**
- * Created by Simon on 25/05/2015.
+ * Photos fragment is dedicated to retrieving a photo using a button to start an intent for an app
+ * to access a photo.
  */
 public class PhotosFragment extends Fragment {
     static final int PICK_PHOTO_REQUEST = 1;

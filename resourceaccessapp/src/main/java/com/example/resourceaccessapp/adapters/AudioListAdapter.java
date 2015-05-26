@@ -12,7 +12,12 @@ import com.example.resourceaccessapp.R;
 import java.util.List;
 
 /**
- * Created by Simon on 12/01/2015.
+ * AudioListAdapter is an adapter to link the data we gather from the AudioFragment to the listview
+ * so that we can display the data to a user.
+ *
+ * Currently all that we get is the name of the artist and that's it. This class could be
+ * extended in the future by adding song details, artist etc if we wanted more detailed information.
+ * The idea is just to perform a data access so this is not neccesary at the moment.
  */
 public class AudioListAdapter extends ArrayAdapter<String> {
     public AudioListAdapter(Context context, List<String> contacts) {

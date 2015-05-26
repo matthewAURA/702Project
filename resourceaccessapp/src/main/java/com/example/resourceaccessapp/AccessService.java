@@ -6,49 +6,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.RemoteException;
-import android.provider.MediaStore;
-import android.util.Log;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.Data;
-
-
 
 /**
- * Created by Simon on 9/04/2015.
+ * The AccessService creates an service which will access all the contacts on the phone and "modify"
+ * them. It runs until the service is stopped and there is a one second delay between loading
+ * the contacts again. We don't actually modify the contacts but the update method for the
+ * content provider should still be called since we just update with the same information.
  */
 public class AccessService extends IntentService {
     public AccessService(){
         super("AccessService");
     }
-    private static final String LOG_TAG = "702 RESOURCE ACCESS APP";
 
     @Override
     protected void onHandleIntent(Intent workIntent){
         while(true){
             synchronized (this) {
-                Log.d(LOG_TAG, "Waiting...");
                 try {
                     wait(1000);
                 }catch (InterruptedException e){}
-                Log.d(LOG_TAG, "Accessing Contacts");
                 accessContacts();
             }
         }
     }
 
+    /**
+     * Update contact method will take a contactId and name and update the contactid with the new
+     * contact name
+     * @param contactId     Contact to update
+     * @param contactName   New contact name.
+     */
     public void updateContact (String contactId, String contactName){
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
         ops.add(ContentProviderOperation.newUpdate(ContactsContract.Contacts.CONTENT_URI)
@@ -64,12 +56,13 @@ public class AccessService extends IntentService {
         }
     }
 
+    /**
+     * This method is called to query the contacts and retrieve a list of all the contacts.
+     */
     private void accessContacts(){
-        Log.d(LOG_TAG,"Getting Content Resolver");
         Context c = this.getApplicationContext();
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-        Log.d(LOG_TAG,"Content Provider queried");
         if (cur.getCount() > 0) {
             while (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
@@ -79,6 +72,5 @@ public class AccessService extends IntentService {
                 updateContact(id, newName);
             }
         }
-        Log.d(LOG_TAG,"Contacts queried successfully");
     }
 }
