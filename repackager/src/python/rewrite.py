@@ -16,7 +16,10 @@ class MethodInjector:
         existingPackage.class.method injectedPackage.class.method [args]
 
         '''
-        self.methodMappings = [("android.content.ContentResolver.query","com.secure.ResourceLogger.logQuery",[1])]
+        self.methodMappings = [("android.content.ContentResolver.query","com.secure.ResourceLogger.logQuery",[1]),
+                               ("android.content.ContentResolver.insert","com.secure.ResourceLogger.logQuery",[1]),
+                               ("android.content.ContentResolver.update","com.secure.ResourceLogger.logQuery",[1]),
+                               ("android.content.ContentResolver.delete","com.secure.ResourceLogger.logQuery",[1])]
         self.methodReplaces = []
         for mapping in self.methodMappings:
             r = MethodReplace(mapping[0],mapping[1],mapping[2])

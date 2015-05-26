@@ -12,6 +12,9 @@ import java.util.Queue;
 
 /**
  * Created by matthewdyer on 23/05/15.
+ *
+ * @class ResourceLogger
+ * Logs resource access 
  */
 public class ResourceLogger {
 
