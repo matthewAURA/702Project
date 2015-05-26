@@ -12,7 +12,11 @@ import com.example.resourceaccessapp.R;
 import java.util.List;
 
 /**
- * Created by Simon on 12/01/2015.
+ * ContactsListAdapter simply populates the listview with the data we gather from the
+ * ContactsFragment.
+ *
+ * All that we get at the moment is the name of the contact. This class could show further information
+ * and link with the ContactsFragment to allow the app to modify contacts to simulate updates.
  */
 public class ContactsListAdapter extends ArrayAdapter<String> {
     public ContactsListAdapter(Context context, List<String> contacts) {
