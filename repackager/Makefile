@@ -1,8 +1,9 @@
 
 all:
-	git clone git://github.com/iBotPeaches/Apktool.git
+	if [ -d “./Apktool” ]; then git clone git://github.com/iBotPeaches/Apktool.git; fi
 	cd Apktool; ./gradlew; ./gradlew build fatJar;
-	git clone git@github.com:matthewAURA/aurasium.git
+	if [ -d “./aurasium” ]; then git clone git@github.com:matthewAURA/aurasium.git; fi
+	pip install -r requirements.txt
 
 clean:
 	rm -rf Apktool/
