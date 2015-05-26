@@ -2,14 +2,18 @@ package com.tp702_04.apps.project702;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
- * Created by jamesbutler on 10/04/15.
+ * @author jamesbutler
+ *
+ * DetectionService is responsible for adding resource access information to the database. It
+ * receives an intent which contains the information to construct a logItem which can then be
+ * stored in the database.
+ *
+ * The class is implemented as an intentservice so that a potentially costly database operation
+ * will not block the application's main loop (As described in android dev reference). In this way
+ * we will not miss a resource access in the event of slow write operations.
+ *
  */
 public class DetectionService extends IntentService {
 

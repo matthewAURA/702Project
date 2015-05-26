@@ -5,7 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by jamesbutler on 23/05/15.
+ * @author jamesbutler
+ *
+ * DetectionBroadcastReceiver is responsible for receiving intents from a repackaged apk. The intent
+ * is received from the resource logger which contains information regarding the resource that has
+ * been accessed.
+ *
+ * Once it receives an intent this class immediately creates a new intent to pass this information
+ * along to the detection service class to prevent any blocking that may occur.
  */
 public class DetectionBroadcastReceiver extends BroadcastReceiver {
     @Override
