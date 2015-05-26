@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/llblue"
     tools:context=".MainActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -14,8 +13,7 @@
             android:id="@+id/expandable_list_view"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:groupIndicator="@null"
-            android:background="@color/llblue">
+            android:groupIndicator="@null">
         </ExpandableListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
