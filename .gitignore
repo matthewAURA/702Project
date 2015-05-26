@@ -43,3 +43,6 @@ build/
 
 repackager/Apktool/
 repackager/aurasium/
+
+#Python bytecode
+*.pyc

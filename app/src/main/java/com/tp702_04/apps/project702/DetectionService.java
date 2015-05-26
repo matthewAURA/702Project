@@ -26,7 +26,8 @@ public class DetectionService extends IntentService {
                 intent.getStringExtra("app_name"),
                 intent.getStringExtra("date"),
                 intent.getStringExtra("time"),
-                intent.getStringExtra("tag_message"));
+                intent.getStringExtra("tag_message"),
+                intent.getStringExtra("is_machine_access"));
         databaseHandler.addLogItem(logItem);
     }
 }

@@ -3,4 +3,8 @@
     <color name="lblue">#435999</color>
     <color name="llblue">#F0F8FF</color>
     <color name="white">#FFFFFF</color>
+    <color name="lightGreen">#B2FFB2</color>
+    <color name="darkGreen">#009933</color>
+    <color name="lightRed">#FFB2B2</color>
+    <color name="darkRed">#CC0000</color>
 </resources>

@@ -1,10 +1,12 @@
 package com.tp702_04.apps.project702;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -75,6 +77,11 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
         TextView textView = (TextView) convertView.findViewById(R.id.list_group_header);
         textView.setText(logItem.getApp());
+        if (logItem.getIsMachineAccess().contentEquals("true")) {
+            textView.setBackgroundColor(Color.RED);
+        } else {
+            textView.setBackgroundColor(Color.GREEN);
+        }
 
         return convertView;
     }
@@ -99,6 +106,17 @@ public class ExpandableLogListAdapter extends BaseExpandableListAdapter {
 
         TextView textViewTagMessage = (TextView) convertView.findViewById(R.id.list_child_4);
         textViewTagMessage.setText(logItem.getTagMessage());
+
+        TextView textViewIsMachineAccess = (TextView) convertView.findViewById(R.id.list_child_5);
+        textViewIsMachineAccess.setText(logItem.getIsMachineAccess());
+
+        RelativeLayout childRelativeLayout = (RelativeLayout) convertView.findViewById(R.id.child_relative_layout);
+
+        if (logItem.getIsMachineAccess().contentEquals("true")) {
+            childRelativeLayout.setBackgroundResource(R.color.lightRed);
+        } else {
+            childRelativeLayout.setBackgroundResource(R.color.lightGreen);
+        }
 
         return convertView;
     }
