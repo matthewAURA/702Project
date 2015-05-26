@@ -2,33 +2,31 @@ package com.tp702_04.apps.project702;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nazish Khan on 10/04/2015.
+ * @Author: Nazish Khan
+ * @Since 10/04/2015
  */
-public class DatabaseHandler extends SQLiteOpenHelper{
 
-    // All Static variables
+/**
+ * This class is responsible for creating the database. It uses instances of the DatabaseManager class to effectively manage the database.
+ */
+
+public class DatabaseHandler extends SQLiteOpenHelper{
 
     private final Context myContext;
 
-    // Database Version
     private static final int DATABASE_VERSION = 1;
 
-    // Database Name
     private static final String DATABASE_NAME = "logItemsManager";
 
-    // LogItems table name
     private static final String TABLE_LOG_ITEMS = "log_items";
 
-    // LogItems Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "resource_accessed_name";
     private static final String KEY_APP = "app_name";
@@ -42,7 +40,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         this.myContext = context;
     }
 
-    // Creating Tables
+    /** Creating Log Items Table
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_LOG_ITEMS_TABLE = "CREATE TABLE " + TABLE_LOG_ITEMS + "("
@@ -51,21 +51,20 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.execSQL(CREATE_LOG_ITEMS_TABLE);
     }
 
-    // Upgrading database
+    /** Upgrading an old database to a newer version
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOG_ITEMS);
-
-        // Create tables again
         onCreate(db);
     }
 
-    /**
-     * All CRUD(Create, Read, Delete) Operations
+    /** Adding a new log item. This method accepts logitem object as parameter. We need to build ContentValues parameters using LogItem object. Once we inserted data in database we need to close the database connection.
+     * @param logitem
      */
-
-    // Adding new log item. This method accepts Contact object as parameter. We need to build ContentValues parameters using LogItem object. Once we inserted data in database we need to close the database connection.
     public void addLogItem(LogItem logitem) {
 
         DatabaseManager.initializeInstance(this);
@@ -79,12 +78,14 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         values.put(KEY_TAG_MESSAGE, logitem.getTagMessage()); // Log Item Tag Message
         values.put(KEY_IS_MACHINE_ACCESS, logitem.getIsMachineAccess());
 
-        // Inserting Row
         db.insert(TABLE_LOG_ITEMS, null, values);
         DatabaseManager.getInstance().closeDatabase();
     }
 
-    // Getting single log item. It accepts id as parameter and will return the matched row from the database.
+    /** Getting single log item. It accepts id as parameter and will return the matched row from the database.
+     * @param id
+     * @return
+     */
     public LogItem getLogItem(int id) {
 
         DatabaseManager.initializeInstance(this);
@@ -108,18 +109,18 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return logitem;
     }
 
-    // Getting All Log Items. This method will return all log items from database in array list format of LogItem class type. You need to write a for loop to go through each contact.
+    /** Getting All Log Items. This method will return all log items from database in array list format of LogItem class type. You need to write a for loop to go through each contact.
+     * @return
+     */
     public List<LogItem> getAllLogItems() {
 
         List<LogItem> logItemList = new ArrayList<LogItem>();
-        // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_LOG_ITEMS;
 
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
                 LogItem logitem = new LogItem();
@@ -135,12 +136,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
 
-        // return log item list
         DatabaseManager.getInstance().closeDatabase();
         return logItemList;
     }
 
-    // Getting log items Count. This method will return total number of log items in SQLite database.
+    /** Getting log items Count. This method will return total number of log items in SQLite database.
+     * @return
+     */
     public int getLogItemsCount() {
 
         String countQuery = "SELECT  * FROM " + TABLE_LOG_ITEMS;
@@ -150,12 +152,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         int count=cursor.getCount();
         cursor.close();
 
-        // return count
         DatabaseManager.getInstance().closeDatabase();
         return count;
     }
 
-    // Deleting all log items
+    /** Deleting all log items
+     * @param logitem
+     */
     public void deleteLogItem(LogItem logitem) {
 
         DatabaseManager.initializeInstance(this);

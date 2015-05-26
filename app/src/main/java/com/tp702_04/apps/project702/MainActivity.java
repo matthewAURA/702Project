@@ -1,11 +1,13 @@
 package com.tp702_04.apps.project702;
 
 import android.app.Activity;
+
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +42,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         final ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view);
         expandableListView.setOnGroupClickListener(new OnGroupClickListener() {
             @Override
@@ -52,6 +55,7 @@ public class MainActivity extends Activity {
         expandableListView.setAdapter(expandableLogListAdapter);
 
         databaseHandler = new DatabaseHandler(this);
+
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -86,4 +90,5 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
