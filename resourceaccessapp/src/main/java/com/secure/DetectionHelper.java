@@ -144,13 +144,21 @@ public class DetectionHelper implements SensorEventListener {
 
         // Check the stack trace for a string containing a private inner class which is only used when responding
         // to a user-triggered TouchEvent
+        boolean foundMethod = false;
+
         for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
             String stackTrace = e.toString();
             if (stackTrace.contains("android.view.View$PerformClick.run")) {
                 machineAccess = false;
+                foundMethod = true;
             } else if (stackTrace.contains("android.support.v4.widget.SwipeRefreshLayout$1.onAnimationEnd")) {
                 machineAccess = false;
+                foundMethod = true;
             }
+        }
+
+        if (!foundMethod){
+            machineAccess = true;
         }
 
         return machineAccess;

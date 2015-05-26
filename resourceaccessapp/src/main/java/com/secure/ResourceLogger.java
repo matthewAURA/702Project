@@ -14,7 +14,7 @@ import java.util.Queue;
  * Created by matthewdyer on 23/05/15.
  *
  * @class ResourceLogger
- * Logs resource access 
+ * Logs resource access
  */
 public class ResourceLogger {
 
@@ -45,12 +45,12 @@ public class ResourceLogger {
         }
     }
 
-    public static void logQuery(Uri uri){
+    private static void log(Uri uri, String type){
         if (context == null) {
             return;
         }
         Intent intent = new Intent(ResourceLogger.BROADCAST_URI);
-        intent.putExtra("resource_accessed_name", "Contacts");
+        intent.putExtra("resource_accessed_name", "Contacts " + type);
         if (context == null) {
             intent.putExtra("app_name", "");
         }else{
@@ -69,6 +69,23 @@ public class ResourceLogger {
         intent.putExtra("is_machine_access", detectionHelper.isMachineAccess() ? "true" : "false");
 
         sendMessage(intent);
+    }
+
+
+    public static void logQuery(Uri uri){
+        log(uri,"query");
+    }
+
+    public static void logUpdate(Uri uri){
+        log(uri,"update");
+    }
+
+    public static void logInsert(Uri uri){
+        log(uri,"insert");
+    }
+
+    public static void logDelete(Uri uri){
+        log(uri,"delete");
     }
 
 
