@@ -157,9 +157,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
     /** Deleting all log items
-     * @param logitem
      */
-    public void deleteLogItem(LogItem logitem) {
+    public void deleteAllLogItems() {
 
         DatabaseManager.initializeInstance(this);
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
