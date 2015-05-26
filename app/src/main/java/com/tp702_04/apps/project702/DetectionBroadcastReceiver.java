@@ -16,6 +16,7 @@ public class DetectionBroadcastReceiver extends BroadcastReceiver {
         newIntent.putExtra("date", intent.getStringExtra("date"));
         newIntent.putExtra("time", intent.getStringExtra("time"));
         newIntent.putExtra("tag_message", intent.getStringExtra("tag_message"));
+        newIntent.putExtra("is_machine_access", intent.getStringExtra("is_machine_access"));
         context.startService(newIntent);
     }
 }

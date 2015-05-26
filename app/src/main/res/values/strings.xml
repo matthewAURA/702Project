@@ -9,4 +9,5 @@
     <string name="list_item_3">Date</string>
     <string name="list_item_4">Time</string>
     <string name="list_item_5">Tag Message</string>
+    <string name="list_item_6">Is Machine Access?</string>
 </resources>

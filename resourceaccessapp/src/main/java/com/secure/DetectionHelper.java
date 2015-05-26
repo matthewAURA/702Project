@@ -10,11 +10,16 @@ import android.os.PowerManager;
 import android.util.Log;
 
 /**
- * Created by jamesbutler on 25/05/15.
+ * @Author: Nazish Khan
+ * @Since 25/05/2015
  */
+
+/**
+ * This class distinguishes between machine and human access based on accelerometer and light sensors, as well as the display being on or off.
+ */
+
 public class DetectionHelper implements SensorEventListener {
 
-    //accelerometer sensor variables
     private SensorManager accelManager;
     private Sensor accelerometer;
     private final float NOISE = (float) 0.04;
@@ -23,36 +28,30 @@ public class DetectionHelper implements SensorEventListener {
     private static float accelX = (float)0.0, accelY = (float)0.0, accelZ = (float)0.0;
     private static boolean hasAccelData = false;
 
-    //light sensor variables
     private SensorManager lightManager;
     private Sensor light;
     private static float lightValue = 0;
 
-    //screen display variable
     private PowerManager powerManager;
     private boolean screenInteractive;
 
     public DetectionHelper(Context context) {
 
-//        proximityValue = "";
-
-        //initializing the accelerometer variables
         mInitialized = false;
         accelManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
         accelerometer = accelManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         accelManager.registerListener(this, accelerometer , SensorManager.SENSOR_DELAY_NORMAL);
 
-        //initiliazing the light variables
         lightManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
         light = lightManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         lightManager.registerListener(this, light , SensorManager.SENSOR_DELAY_NORMAL);
 
-        //initializing the power manager to check screen status
         powerManager = (PowerManager) context.getSystemService(context.POWER_SERVICE);
         isScreenDisplayOn();
     }
 
-    //display method to tell us if the device is interactive or not and checks for the current API version being 20 or above. As the previous method isScreenOn() was deprecated in API versions < 20.
+    /** Display method to tell us if the device is interactive or not and checks for the current API version being 20 or above. As the previous method isScreenOn() was deprecated in API versions < 20.
+     */
     public void isScreenDisplayOn() {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
@@ -66,7 +65,7 @@ public class DetectionHelper implements SensorEventListener {
         }
     }
 
-    // these methods (Resume, Pause, SensorChanged, AccuracyChanged) are listening for sensor events
+    // These methods (Resume, Pause, SensorChanged, AccuracyChanged) are listening for sensor events
     public void onResume() {
         accelManager.registerListener(this, accelerometer,
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -81,7 +80,9 @@ public class DetectionHelper implements SensorEventListener {
         lightManager.unregisterListener(this);
     }
 
-    //this method determines which type of sensor event occurs and stores the values in respective sensor variables
+    /** This method determines which type of sensor event occurs and stores the values in respective sensor variables
+     * @param event
+     */
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -115,12 +116,18 @@ public class DetectionHelper implements SensorEventListener {
         }
     }
 
+    /** Required method for sensors. Has to exist but can be ignored it terms of its contents.
+     * @param sensor
+     * @param accuracy
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // required method for sensors. Has to exist but can be ignored it terms of its contents.
+
     }
 
-    //this method checks for different conditions to be true in order to flag an access as machine access
+    /** This method checks for different conditions to be true in order to flag an access as machine access
+     * @return if it is a machine access
+     */
     public boolean isMachineAccess(){
 
         boolean machineAccess;
@@ -134,6 +141,18 @@ public class DetectionHelper implements SensorEventListener {
         }else{
             machineAccess = false;
         }
+
+        // Check the stack trace for a string containing a private inner class which is only used when responding
+        // to a user-triggered TouchEvent
+        for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
+            String stackTrace = e.toString();
+            if (stackTrace.contains("android.view.View$PerformClick.run")) {
+                machineAccess = false;
+            } else if (stackTrace.contains("android.support.v4.widget.SwipeRefreshLayout$1.onAnimationEnd")) {
+                machineAccess = false;
+            }
+        }
+
         return machineAccess;
     }
 }
