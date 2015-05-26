@@ -17,9 +17,9 @@ class MethodInjector:
 
         '''
         self.methodMappings = [("android.content.ContentResolver.query","com.secure.ResourceLogger.logQuery",[1]),
-                               ("android.content.ContentResolver.insert","com.secure.ResourceLogger.logQuery",[1]),
-                               ("android.content.ContentResolver.update","com.secure.ResourceLogger.logQuery",[1]),
-                               ("android.content.ContentResolver.delete","com.secure.ResourceLogger.logQuery",[1])]
+                               ("android.content.ContentResolver.insert","com.secure.ResourceLogger.logInsert",[1]),
+                               ("android.content.ContentResolver.update","com.secure.ResourceLogger.logUpdate",[1]),
+                               ("android.content.ContentResolver.delete","com.secure.ResourceLogger.logDelete",[1])]
         self.methodReplaces = []
         for mapping in self.methodMappings:
             r = MethodReplace(mapping[0],mapping[1],mapping[2])
@@ -103,8 +103,7 @@ class MethodReplace:
 '''
 Opens the AndroidManifest.xml manifest and parses it to find the main activity, returns the class name of the main activity
 '''
-def findMainActivity():
-    manifestFile = sys.argv[2]
+def findMainActivity(manifestFile):
     with open(manifestFile) as manifest:
         xmlManifest =  xml.parseString(manifest.read())
         nodes = xmlManifest.getElementsByTagName('activity')
@@ -143,7 +142,7 @@ def injectServiceStart(activtiy,line):
 
 def main():
     injector = MethodInjector()
-    mainActivity = findMainActivity()
+    mainActivity = findMainActivity(sys.argv[2])
     mainActivity = "L"+"/".join(mainActivity.split("."))+";"
     if (len(sys.argv) != 3):
         print "usage: rewrite.py [application file] [AndroidManifest.xml]"

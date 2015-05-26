@@ -49,19 +49,19 @@
     .prologue
     const/4 v1, 0x0
 
-    .line 23
+    .line 28
     sput v1, Lcom/secure/DetectionHelper;->accelX:F
 
     sput v1, Lcom/secure/DetectionHelper;->accelY:F
 
     sput v1, Lcom/secure/DetectionHelper;->accelZ:F
 
-    .line 24
+    .line 29
     const/4 v0, 0x0
 
     sput-boolean v0, Lcom/secure/DetectionHelper;->hasAccelData:Z
 
-    .line 29
+    .line 33
     sput v1, Lcom/secure/DetectionHelper;->lightValue:F
 
     return-void
@@ -74,10 +74,10 @@
     .prologue
     const/4 v2, 0x3
 
-    .line 35
+    .line 38
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 20
+    .line 25
     const v0, 0x3d23d70a    # 0.04f
 
     iput v0, p0, Lcom/secure/DetectionHelper;->NOISE:F
@@ -116,7 +116,7 @@
 
     invoke-virtual {v0, p0, v1, v2}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;I)Z
 
-    .line 46
+    .line 45
     const-string v0, "sensor"
 
     invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
@@ -127,7 +127,7 @@
 
     iput-object v0, p0, Lcom/secure/DetectionHelper;->lightManager:Landroid/hardware/SensorManager;
 
-    .line 47
+    .line 46
     iget-object v0, p0, Lcom/secure/DetectionHelper;->lightManager:Landroid/hardware/SensorManager;
 
     const/4 v1, 0x5
@@ -138,14 +138,14 @@
 
     iput-object v0, p0, Lcom/secure/DetectionHelper;->light:Landroid/hardware/Sensor;
 
-    .line 48
+    .line 47
     iget-object v0, p0, Lcom/secure/DetectionHelper;->lightManager:Landroid/hardware/SensorManager;
 
     iget-object v1, p0, Lcom/secure/DetectionHelper;->light:Landroid/hardware/Sensor;
 
     invoke-virtual {v0, p0, v1, v2}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;I)Z
 
-    .line 51
+    .line 49
     const-string v0, "power"
 
     invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
@@ -156,101 +156,195 @@
 
     iput-object v0, p0, Lcom/secure/DetectionHelper;->powerManager:Landroid/os/PowerManager;
 
-    .line 52
+    .line 50
     invoke-virtual {p0}, Lcom/secure/DetectionHelper;->isScreenDisplayOn()V
 
-    .line 53
+    .line 51
     return-void
 .end method
 
 
 # virtual methods
 .method public isMachineAccess()Z
-    .locals 3
+    .locals 9
 
     .prologue
-    const/4 v2, 0x0
-
-    .line 128
-    iget-boolean v1, p0, Lcom/secure/DetectionHelper;->screenInteractive:Z
-
-    if-nez v1, :cond_0
-
-    .line 129
-    const/4 v0, 0x1
-
-    .line 137
-    .local v0, "machineAccess":Z
-    :goto_0
-    return v0
-
-    .line 130
-    .end local v0    # "machineAccess":Z
-    :cond_0
-    sget-boolean v1, Lcom/secure/DetectionHelper;->hasAccelData:Z
-
-    if-eqz v1, :cond_1
-
-    sget v1, Lcom/secure/DetectionHelper;->accelX:F
-
-    cmpl-float v1, v1, v2
-
-    if-nez v1, :cond_1
-
-    sget v1, Lcom/secure/DetectionHelper;->accelY:F
-
-    cmpl-float v1, v1, v2
-
-    if-nez v1, :cond_1
-
-    sget v1, Lcom/secure/DetectionHelper;->accelZ:F
-
-    cmpl-float v1, v1, v2
-
-    if-nez v1, :cond_1
-
-    .line 131
-    const/4 v0, 0x1
-
-    .restart local v0    # "machineAccess":Z
-    goto :goto_0
-
-    .line 132
-    .end local v0    # "machineAccess":Z
-    :cond_1
-    sget v1, Lcom/secure/DetectionHelper;->lightValue:F
-
-    cmpl-float v1, v1, v2
-
-    if-nez v1, :cond_2
-
-    .line 133
-    const/4 v0, 0x1
-
-    .restart local v0    # "machineAccess":Z
-    goto :goto_0
+    const/4 v8, 0x0
 
     .line 135
-    .end local v0    # "machineAccess":Z
-    :cond_2
-    const/4 v0, 0x0
+    iget-boolean v7, p0, Lcom/secure/DetectionHelper;->screenInteractive:Z
 
-    .restart local v0    # "machineAccess":Z
+    if-nez v7, :cond_1
+
+    .line 136
+    const/4 v5, 0x1
+
+    .line 147
+    .local v5, "machineAccess":Z
+    :goto_0
+    const/4 v2, 0x0
+
+    .line 149
+    .local v2, "foundMethod":Z
+    invoke-static {}, Ljava/lang/Thread;->currentThread()Ljava/lang/Thread;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/Thread;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v0
+
+    .local v0, "arr$":[Ljava/lang/StackTraceElement;
+    array-length v4, v0
+
+    .local v4, "len$":I
+    const/4 v3, 0x0
+
+    .local v3, "i$":I
+    :goto_1
+    if-ge v3, v4, :cond_5
+
+    aget-object v1, v0, v3
+
+    .line 150
+    .local v1, "e":Ljava/lang/StackTraceElement;
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->toString()Ljava/lang/String;
+
+    move-result-object v6
+
+    .line 151
+    .local v6, "stackTrace":Ljava/lang/String;
+    const-string v7, "android.view.View$PerformClick.run"
+
+    invoke-virtual {v6, v7}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v7
+
+    if-eqz v7, :cond_4
+
+    .line 152
+    const/4 v5, 0x0
+
+    .line 153
+    const/4 v2, 0x1
+
+    .line 149
+    :cond_0
+    :goto_2
+    add-int/lit8 v3, v3, 0x1
+
+    goto :goto_1
+
+    .line 137
+    .end local v0    # "arr$":[Ljava/lang/StackTraceElement;
+    .end local v1    # "e":Ljava/lang/StackTraceElement;
+    .end local v2    # "foundMethod":Z
+    .end local v3    # "i$":I
+    .end local v4    # "len$":I
+    .end local v5    # "machineAccess":Z
+    .end local v6    # "stackTrace":Ljava/lang/String;
+    :cond_1
+    sget-boolean v7, Lcom/secure/DetectionHelper;->hasAccelData:Z
+
+    if-eqz v7, :cond_2
+
+    sget v7, Lcom/secure/DetectionHelper;->accelX:F
+
+    cmpl-float v7, v7, v8
+
+    if-nez v7, :cond_2
+
+    sget v7, Lcom/secure/DetectionHelper;->accelY:F
+
+    cmpl-float v7, v7, v8
+
+    if-nez v7, :cond_2
+
+    sget v7, Lcom/secure/DetectionHelper;->accelZ:F
+
+    cmpl-float v7, v7, v8
+
+    if-nez v7, :cond_2
+
+    .line 138
+    const/4 v5, 0x1
+
+    .restart local v5    # "machineAccess":Z
     goto :goto_0
+
+    .line 139
+    .end local v5    # "machineAccess":Z
+    :cond_2
+    sget v7, Lcom/secure/DetectionHelper;->lightValue:F
+
+    cmpl-float v7, v7, v8
+
+    if-nez v7, :cond_3
+
+    .line 140
+    const/4 v5, 0x1
+
+    .restart local v5    # "machineAccess":Z
+    goto :goto_0
+
+    .line 142
+    .end local v5    # "machineAccess":Z
+    :cond_3
+    const/4 v5, 0x0
+
+    .restart local v5    # "machineAccess":Z
+    goto :goto_0
+
+    .line 154
+    .restart local v0    # "arr$":[Ljava/lang/StackTraceElement;
+    .restart local v1    # "e":Ljava/lang/StackTraceElement;
+    .restart local v2    # "foundMethod":Z
+    .restart local v3    # "i$":I
+    .restart local v4    # "len$":I
+    .restart local v6    # "stackTrace":Ljava/lang/String;
+    :cond_4
+    const-string v7, "android.support.v4.widget.SwipeRefreshLayout$1.onAnimationEnd"
+
+    invoke-virtual {v6, v7}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v7
+
+    if-eqz v7, :cond_0
+
+    .line 155
+    const/4 v5, 0x0
+
+    .line 156
+    const/4 v2, 0x1
+
+    goto :goto_2
+
+    .line 160
+    .end local v1    # "e":Ljava/lang/StackTraceElement;
+    .end local v6    # "stackTrace":Ljava/lang/String;
+    :cond_5
+    if-nez v2, :cond_6
+
+    .line 161
+    const/4 v5, 0x1
+
+    .line 164
+    :cond_6
+    return v5
 .end method
 
 .method public isScreenDisplayOn()V
     .locals 2
 
     .prologue
-    .line 58
+    .line 57
     sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
 
     const/16 v1, 0x14
 
     if-lt v0, v1, :cond_1
 
-    .line 59
+    .line 58
     iget-object v0, p0, Lcom/secure/DetectionHelper;->powerManager:Landroid/os/PowerManager;
 
     invoke-virtual {v0}, Landroid/os/PowerManager;->isInteractive()Z
@@ -259,16 +353,16 @@
 
     if-eqz v0, :cond_0
 
-    .line 60
+    .line 59
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/secure/DetectionHelper;->screenInteractive:Z
 
-    .line 67
+    .line 66
     :goto_0
     return-void
 
-    .line 62
+    .line 61
     :cond_0
     const/4 v0, 0x0
 
@@ -276,7 +370,7 @@
 
     goto :goto_0
 
-    .line 65
+    .line 64
     :cond_1
     iget-object v0, p0, Lcom/secure/DetectionHelper;->powerManager:Landroid/os/PowerManager;
 
@@ -295,7 +389,7 @@
     .param p2, "accuracy"    # I
 
     .prologue
-    .line 121
+    .line 126
     return-void
 .end method
 
@@ -303,17 +397,17 @@
     .locals 1
 
     .prologue
-    .line 80
+    .line 79
     iget-object v0, p0, Lcom/secure/DetectionHelper;->accelManager:Landroid/hardware/SensorManager;
 
     invoke-virtual {v0, p0}, Landroid/hardware/SensorManager;->unregisterListener(Landroid/hardware/SensorEventListener;)V
 
-    .line 81
+    .line 80
     iget-object v0, p0, Lcom/secure/DetectionHelper;->lightManager:Landroid/hardware/SensorManager;
 
     invoke-virtual {v0, p0}, Landroid/hardware/SensorManager;->unregisterListener(Landroid/hardware/SensorEventListener;)V
 
-    .line 82
+    .line 81
     return-void
 .end method
 
@@ -323,21 +417,21 @@
     .prologue
     const/4 v2, 0x3
 
-    .line 71
+    .line 70
     iget-object v0, p0, Lcom/secure/DetectionHelper;->accelManager:Landroid/hardware/SensorManager;
 
     iget-object v1, p0, Lcom/secure/DetectionHelper;->accelerometer:Landroid/hardware/Sensor;
 
     invoke-virtual {v0, p0, v1, v2}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;I)Z
 
-    .line 74
+    .line 73
     iget-object v0, p0, Lcom/secure/DetectionHelper;->lightManager:Landroid/hardware/SensorManager;
 
     iget-object v1, p0, Lcom/secure/DetectionHelper;->light:Landroid/hardware/Sensor;
 
     invoke-virtual {v0, p0, v1, v2}, Landroid/hardware/SensorManager;->registerListener(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;I)Z
 
-    .line 77
+    .line 76
     return-void
 .end method
 
@@ -352,7 +446,7 @@
 
     const/4 v8, 0x1
 
-    .line 87
+    .line 88
     iget-object v6, p1, Landroid/hardware/SensorEvent;->sensor:Landroid/hardware/Sensor;
 
     invoke-virtual {v6}, Landroid/hardware/Sensor;->getType()I
@@ -361,21 +455,21 @@
 
     if-ne v6, v8, :cond_5
 
-    .line 88
+    .line 89
     sput-boolean v8, Lcom/secure/DetectionHelper;->hasAccelData:Z
 
-    .line 89
+    .line 90
     iget-object v6, p1, Landroid/hardware/SensorEvent;->values:[F
 
     aget v3, v6, v10
 
-    .line 90
+    .line 91
     .local v3, "x":F
     iget-object v6, p1, Landroid/hardware/SensorEvent;->values:[F
 
     aget v4, v6, v8
 
-    .line 91
+    .line 92
     .local v4, "y":F
     iget-object v6, p1, Landroid/hardware/SensorEvent;->values:[F
 
@@ -383,25 +477,25 @@
 
     aget v5, v6, v7
 
-    .line 92
+    .line 93
     .local v5, "z":F
     iget-boolean v6, p0, Lcom/secure/DetectionHelper;->mInitialized:Z
 
     if-nez v6, :cond_1
 
-    .line 93
+    .line 94
     iput v3, p0, Lcom/secure/DetectionHelper;->mLastX:F
 
-    .line 94
+    .line 95
     iput v4, p0, Lcom/secure/DetectionHelper;->mLastY:F
 
-    .line 95
+    .line 96
     iput v5, p0, Lcom/secure/DetectionHelper;->mLastZ:F
 
-    .line 96
+    .line 97
     iput-boolean v8, p0, Lcom/secure/DetectionHelper;->mInitialized:Z
 
-    .line 116
+    .line 117
     .end local v3    # "x":F
     .end local v4    # "y":F
     .end local v5    # "z":F
@@ -409,7 +503,7 @@
     :goto_0
     return-void
 
-    .line 98
+    .line 99
     .restart local v3    # "x":F
     .restart local v4    # "y":F
     .restart local v5    # "z":F
@@ -422,7 +516,7 @@
 
     move-result v0
 
-    .line 99
+    .line 100
     .local v0, "deltaX":F
     iget v6, p0, Lcom/secure/DetectionHelper;->mLastY:F
 
@@ -432,7 +526,7 @@
 
     move-result v1
 
-    .line 100
+    .line 101
     .local v1, "deltaY":F
     iget v6, p0, Lcom/secure/DetectionHelper;->mLastZ:F
 
@@ -442,7 +536,7 @@
 
     move-result v2
 
-    .line 101
+    .line 102
     .local v2, "deltaZ":F
     cmpg-float v6, v0, v9
 
@@ -450,7 +544,7 @@
 
     const/4 v0, 0x0
 
-    .line 102
+    .line 103
     :cond_2
     cmpg-float v6, v1, v9
 
@@ -458,7 +552,7 @@
 
     const/4 v1, 0x0
 
-    .line 103
+    .line 104
     :cond_3
     cmpg-float v6, v2, v9
 
@@ -466,28 +560,28 @@
 
     const/4 v2, 0x0
 
-    .line 104
+    .line 105
     :cond_4
     iput v3, p0, Lcom/secure/DetectionHelper;->mLastX:F
 
-    .line 105
+    .line 106
     iput v4, p0, Lcom/secure/DetectionHelper;->mLastY:F
 
-    .line 106
+    .line 107
     iput v5, p0, Lcom/secure/DetectionHelper;->mLastZ:F
 
-    .line 108
+    .line 109
     sput v0, Lcom/secure/DetectionHelper;->accelX:F
 
-    .line 109
+    .line 110
     sput v1, Lcom/secure/DetectionHelper;->accelY:F
 
-    .line 110
+    .line 111
     sput v2, Lcom/secure/DetectionHelper;->accelZ:F
 
     goto :goto_0
 
-    .line 113
+    .line 114
     .end local v0    # "deltaX":F
     .end local v1    # "deltaY":F
     .end local v2    # "deltaZ":F
@@ -505,7 +599,7 @@
 
     if-ne v6, v7, :cond_0
 
-    .line 114
+    .line 115
     iget-object v6, p1, Landroid/hardware/SensorEvent;->values:[F
 
     aget v6, v6, v10
