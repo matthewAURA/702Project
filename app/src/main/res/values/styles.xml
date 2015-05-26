@@ -3,6 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textColor">@color/dblue</item>
+        <item name="android:panelBackground">@color/white</item>
+        <item name="android:panelColorBackground">@color/white</item>
     </style>
 
 </resources>
