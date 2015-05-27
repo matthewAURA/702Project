@@ -46,4 +46,4 @@ Licence:
 - Clear All menu option to clear the database
 
 ### Our project findings
-[Google Doc] (https://docs.google.com/document/d/17WsT-D2gnf_n3IeoNfgEpp2LW62qtbXXbajp_pAODjM/edit?usp=sharing)
+[Google Doc] (https://docs.google.com/document/d/17WsT-D2gnf_n3IeoNfgEpp2LW62qtbXXbajp_pAODjM/edit?usp=sharing) 
